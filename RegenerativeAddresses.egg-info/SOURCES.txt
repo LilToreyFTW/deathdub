@@ -1,0 +1,6 @@
+README.md
+setup.py
+RegenerativeAddresses.egg-info/PKG-INFO
+RegenerativeAddresses.egg-info/SOURCES.txt
+RegenerativeAddresses.egg-info/dependency_links.txt
+RegenerativeAddresses.egg-info/top_level.txt
