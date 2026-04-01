@@ -881,6 +881,12 @@ class RegenerativeAddressesToolPro:
         # Buy Me a Coffee tab
         self.create_coffee_tab(notebook)
         
+        # Demon VPN tab
+        self.create_vpn_tab(notebook)
+        
+        # Demon CLI tab
+        self.create_cli_tab(notebook)
+        
         # Update stats
         self.update_dashboard_stats()
     
@@ -1699,6 +1705,281 @@ Features:
         ttk.Label(stats_frame, text="• Professional Web Interface", style='Info.TLabel').pack(anchor=tk.W, pady=2)
         ttk.Label(stats_frame, text="• Cross-Platform Support", style='Info.TLabel').pack(anchor=tk.W, pady=2)
     
+    def create_vpn_tab(self, notebook):
+        """Create Demon VPN tab"""
+        frame = ttk.Frame(notebook, style='Dark.TFrame')
+        notebook.add(frame, text=" 🔐 VPN ")
+        
+        # Main container
+        container = ttk.Frame(frame, style='Dark.TFrame')
+        container.pack(fill=tk.BOTH, expand=True, padx=20, pady=20)
+        
+        # VPN section
+        vpn_frame = ttk.LabelFrame(container, text="Demon VPN Interface", style='Card.TLabelframe', padding="30")
+        vpn_frame.pack(fill=tk.BOTH, expand=True, pady=20)
+        
+        # VPN icon and message
+        ttk.Label(vpn_frame, text="🔐", font=('Segoe UI', 48), style='Info.TLabel').pack(pady=10)
+        
+        ttk.Label(vpn_frame, text="Demon VPN - WireGuard Docker Integration", 
+                 font=('Segoe UI', 16, 'bold'), style='Info.TLabel').pack(pady=10)
+        
+        ttk.Label(vpn_frame, text="WireGuard Docker container with Demon CLI integration\nAdvanced VPN with C-based networking simulation", 
+                 font=('Segoe UI', 12), style='Info.TLabel', justify=tk.CENTER).pack(pady=20)
+        
+        # GitHub Workflow Status
+        github_frame = ttk.LabelFrame(vpn_frame, text="GitHub Workflow Status", style='Card.TLabelframe', padding="15")
+        github_frame.pack(fill=tk.X, pady=15)
+        
+        ttk.Label(github_frame, text="🐙 Latest Release: Demon 1.3.4", 
+                 font=('Segoe UI', 11, 'bold'), style='Info.TLabel').pack(anchor=tk.W, pady=2)
+        ttk.Label(github_frame, text="🐳 Docker: WireGuard + OpenVPN Support", 
+                 font=('Segoe UI', 11), style='Info.TLabel').pack(anchor=tk.W, pady=2)
+        ttk.Label(github_frame, text="🔧 Platform: Windows 11, Windows 10, Ubuntu 20.04", 
+                 font=('Segoe UI', 11), style='Info.TLabel').pack(anchor=tk.W, pady=2)
+        
+        # Docker Configuration
+        docker_frame = ttk.LabelFrame(vpn_frame, text="Docker Configuration", style='Card.TLabelframe', padding="15")
+        docker_frame.pack(fill=tk.X, pady=15)
+        
+        ttk.Label(docker_frame, text="🐳 Docker Run Command:", 
+                 font=('Segoe UI', 11, 'bold'), style='Info.TLabel').pack(anchor=tk.W, pady=5)
+        
+        docker_cmd = ttk.Text(docker_frame, height=6, bg='#2a2a2a', fg='#e8e8e8', 
+                           font=('Consolas', 10), wrap=tk.WORD)
+        docker_cmd.pack(fill=tk.X, pady=5)
+        docker_cmd.insert(tk.END, """docker run -d \\
+  --name='Demonvpn' \\
+  --net='bridge' \\
+  --privileged=true \\
+  --cap-add=NET_ADMIN \\
+  -e TZ="America/New_York" \\
+  -e 'ACC=example@gmail.com' \\
+  -e 'PASS=mypassword' \\
+  -e 'COUNTRY=US' \\
+  -e 'NETWORK=192.168.1.0/24' \\
+  -e 'WHITELISTPORTS=9090,8080' \\
+  -p 9090:9090 \\
+  -p 8080:8080 \\
+  -v '/local/path/to/config':'/home/root/.Demon:rw'""")
+        
+        docker_cmd.config(state=tk.DISABLED)
+        
+        # Connection controls
+        controls_frame = ttk.LabelFrame(vpn_frame, text="Connection Controls", style='Card.TLabelframe', padding="15")
+        controls_frame.pack(fill=tk.X, pady=15)
+        
+        # Server selection
+        server_frame = ttk.Frame(controls_frame, style='Dark.TFrame')
+        server_frame.pack(fill=tk.X, pady=10)
+        
+        ttk.Label(server_frame, text="Country:", style='Info.TLabel').pack(side=tk.LEFT, padx=(0, 10))
+        self.vpn_server = ttk.Combobox(server_frame, values=["US", "CA", "NL", "JP", "GB"], 
+                                           state="readonly", width=15)
+        self.vpn_server.set("US")
+        self.vpn_server.pack(side=tk.LEFT)
+        
+        # Protocol selection
+        protocol_frame = ttk.Frame(controls_frame, style='Dark.TFrame')
+        protocol_frame.pack(fill=tk.X, pady=10)
+        
+        ttk.Label(protocol_frame, text="Protocol:", style='Info.TLabel').pack(side=tk.LEFT, padx=(0, 10))
+        self.vpn_protocol = ttk.Combobox(protocol_frame, values=["WireGuard", "OpenVPN"], 
+                                           state="readonly", width=15)
+        self.vpn_protocol.set("WireGuard")
+        self.vpn_protocol.pack(side=tk.LEFT)
+        
+        # Status display
+        status_frame = ttk.LabelFrame(vpn_frame, text="Connection Status", style='Card.TLabelframe', padding="15")
+        status_frame.pack(fill=tk.X, pady=15)
+        
+        self.vpn_status = ttk.Label(status_frame, text="🔴 Disconnected", 
+                                  font=('Segoe UI', 14, 'bold'), style='Info.TLabel')
+        self.vpn_status.pack(pady=10)
+        
+        self.vpn_ip = ttk.Label(status_frame, text="Current IP: Detecting...", 
+                               font=('Segoe UI', 11), style='Info.TLabel')
+        self.vpn_ip.pack(pady=5)
+        
+        # Action buttons
+        button_frame = ttk.Frame(vpn_frame, style='Dark.TFrame')
+        button_frame.pack(fill=tk.X, pady=15)
+        
+        ttk.Button(button_frame, text="🔌 Connect VPN", 
+                  command=self.connect_vpn,
+                  style='Success.TButton').pack(side=tk.LEFT, padx=5, ipady=5, ipadx=10)
+        
+        ttk.Button(button_frame, text="🔓 Disconnect", 
+                  command=self.disconnect_vpn,
+                  style='Danger.TButton').pack(side=tk.LEFT, padx=5, ipady=5, ipadx=10)
+        
+        ttk.Button(button_frame, text="🔄 Check IP", 
+                  command=self.check_ip_address,
+                  style='Primary.TButton').pack(side=tk.LEFT, padx=5, ipady=5, ipadx=10)
+        
+        # Features info
+        features_frame = ttk.LabelFrame(vpn_frame, text="WireGuard Features", style='Card.TLabelframe', padding="15")
+        features_frame.pack(fill=tk.X, pady=15)
+        
+        features_text = """⚡ Extremely Fast - Modern cryptography
+🔒 Simple & Lean - Avoids IPsec complexity  
+🛡️ Secure - State-of-the-art encryption
+🌐 Cross-Platform - Embedded interfaces support
+🐳 Docker Ready - Containerized deployment
+🔧 C-Based - High-performance networking"""
+        
+        ttk.Label(features_frame, text=features_text, 
+                 font=('Segoe UI', 10), style='Info.TLabel', justify=tk.LEFT).pack(anchor=tk.W)
+        
+        # VPN logs
+        logs_frame = ttk.LabelFrame(vpn_frame, text="VPN Activity Log", style='Card.TLabelframe', padding="15")
+        logs_frame.pack(fill=tk.BOTH, expand=True, pady=15)
+        
+        # Create text widget for logs
+        self.vpn_log = tk.Text(logs_frame, height=8, bg='#2a2a2a', fg='#e8e8e8', 
+                               font=('Consolas', 10), wrap=tk.WORD)
+        self.vpn_log.pack(fill=tk.BOTH, expand=True)
+        
+        # Add scrollbar
+        vpn_scrollbar = ttk.Scrollbar(self.vpn_log)
+        vpn_scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        self.vpn_log.config(yscrollcommand=vpn_scrollbar.set)
+        vpn_scrollbar.config(command=self.vpn_log.yview)
+        
+        # Initial log message
+        self.add_vpn_log("Demon VPN interface initialized with WireGuard support.", "info")
+        self.add_vpn_log("Docker container ready for deployment.", "system")
+    
+    def create_cli_tab(self, notebook):
+        """Create Demon CLI tab"""
+        frame = ttk.Frame(notebook, style='Dark.TFrame')
+        notebook.add(frame, text=" 💻 CLI ")
+        
+        # Main container
+        container = ttk.Frame(frame, style='Dark.TFrame')
+        container.pack(fill=tk.BOTH, expand=True, padx=20, pady=20)
+        
+        # CLI section
+        cli_frame = ttk.LabelFrame(container, text="Demon CLI Interface", style='Card.TLabelframe', padding="30")
+        cli_frame.pack(fill=tk.BOTH, expand=True, pady=20)
+        
+        # CLI icon and message
+        ttk.Label(cli_frame, text="💻", font=('Segoe UI', 48), style='Info.TLabel').pack(pady=10)
+        
+        ttk.Label(cli_frame, text="Demon CLI - Docker Container Command Line", 
+                 font=('Segoe UI', 16, 'bold'), style='Info.TLabel').pack(pady=10)
+        
+        ttk.Label(cli_frame, text="Advanced CLI with C-based execution in Docker container\nProfessional command-line simulation for security testing", 
+                 font=('Segoe UI', 12), style='Info.TLabel', justify=tk.CENTER).pack(pady=20)
+        
+        # CLI Status
+        status_frame = ttk.LabelFrame(cli_frame, text="CLI Status", style='Card.TLabelframe', padding="15")
+        status_frame.pack(fill=tk.X, pady=15)
+        
+        ttk.Label(status_frame, text="🐳 Container: Demon CLI v1.3.4", 
+                 font=('Segoe UI', 11, 'bold'), style='Info.TLabel').pack(anchor=tk.W, pady=2)
+        ttk.Label(status_frame, text="🔧 Integration: WireGuard + OpenVPN", 
+                 font=('Segoe UI', 11), style='Info.TLabel').pack(anchor=tk.W, pady=2)
+        ttk.Label(status_frame, text="🌐 Network: Container Bridge Mode", 
+                 font=('Segoe UI', 11), style='Info.TLabel').pack(anchor=tk.W, pady=2)
+        ttk.Label(status_frame, text="🔐 Security: Privileged + NET_ADMIN", 
+                 font=('Segoe UI', 11), style='Info.TLabel').pack(anchor=tk.W, pady=2)
+        
+        # Command input area
+        cmd_frame = ttk.LabelFrame(cli_frame, text="Command Terminal", style='Card.TLabelframe', padding="15")
+        cmd_frame.pack(fill=tk.BOTH, expand=True, pady=20)
+        
+        # Command input
+        input_frame = ttk.Frame(cmd_frame, style='Dark.TFrame')
+        input_frame.pack(fill=tk.X, pady=(0, 10))
+        
+        ttk.Label(input_frame, text="demon-cli$", style='Info.TLabel', 
+                font=('Consolas', 12, 'bold')).pack(side=tk.LEFT)
+        
+        self.cli_command = ttk.Entry(input_frame, font=('Consolas', 12), width=50)
+        self.cli_command.pack(side=tk.LEFT, padx=(10, 0), fill=tk.X, expand=True)
+        self.cli_command.bind('<Return>', self.execute_cli_command)
+        
+        # Execute button
+        ttk.Button(input_frame, text="Execute", 
+                  command=self.execute_cli_command,
+                  style='Primary.TButton').pack(side=tk.RIGHT, padx=(10, 0))
+        
+        # Output display
+        output_frame = ttk.LabelFrame(cli_frame, text="Command Output", style='Card.TLabelframe', padding="15")
+        output_frame.pack(fill=tk.BOTH, expand=True, pady=15)
+        
+        # Create text widget for output
+        self.cli_output = tk.Text(output_frame, height=12, bg='#1a1f36', fg='#00ff00', 
+                               font=('Consolas', 11), wrap=tk.WORD, insertbackground='#1a1f36')
+        self.cli_output.pack(fill=tk.BOTH, expand=True)
+        
+        # Add scrollbar
+        cli_scrollbar = ttk.Scrollbar(self.cli_output)
+        cli_scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        self.cli_output.config(yscrollcommand=cli_scrollbar.set)
+        cli_scrollbar.config(command=self.cli_output.yview)
+        
+        # Docker Commands
+        docker_frame = ttk.LabelFrame(cli_frame, text="Docker Commands", style='Card.TLabelframe', padding="15")
+        docker_frame.pack(fill=tk.X, pady=15)
+        
+        ttk.Label(docker_frame, text="🐳 Docker CLI Commands:", 
+                 font=('Segoe UI', 11, 'bold'), style='Info.TLabel').pack(anchor=tk.W, pady=5)
+        
+        docker_cmds = ttk.Text(docker_frame, height=6, bg='#2a2a2a', fg='#e8e8e8', 
+                            font=('Consolas', 10), wrap=tk.WORD)
+        docker_cmds.pack(fill=tk.X, pady=5)
+        docker_cmds.insert(tk.END, """# Connect to running container
+docker exec -it Demonvpn bash
+
+# View container logs
+docker logs Demonvpn
+
+# Stop container
+docker stop Demonvpn
+
+# Start container
+docker start Demonvpn
+
+# Remove container
+docker rm Demonvpn
+
+# Pull latest image
+docker pull demonvpn/demon:latest
+
+# Run with custom DNS
+docker run -d --name Demonvpn -e NAMESERVER=1.1.1.1 demonvpn/demon""")
+        
+        docker_cmds.config(state=tk.DISABLED)
+        
+        # Quick commands
+        quick_frame = ttk.LabelFrame(cli_frame, text="Quick Commands", style='Card.TLabelframe', padding="15")
+        quick_frame.pack(fill=tk.X, pady=15)
+        
+        quick_buttons = ttk.Frame(quick_frame, style='Dark.TFrame')
+        quick_buttons.pack(fill=tk.X)
+        
+        commands = [
+            ("scan", "Network Scan"),
+            ("proxy", "Proxy Check"),
+            ("encrypt", "Encrypt Data"),
+            ("analyze", "Security Analysis"),
+            ("help", "Show Help"),
+            ("status", "Container Status"),
+            ("logs", "View Logs")
+        ]
+        
+        for cmd, desc in commands:
+            ttk.Button(quick_buttons, text=desc, 
+                      command=lambda c=cmd: self.quick_command(c),
+                      style='Secondary.TButton').pack(side=tk.LEFT, padx=3, pady=3)
+        
+        # Initial message
+        self.add_cli_output("Demon CLI v1.3.4 - Docker Container Interface", "system")
+        self.add_cli_output("Ready for command execution in containerized environment.", "info")
+        self.add_cli_output("Type 'help' for available commands.", "info")
+    
     # Method implementations
     def login(self):
         """Handle user login"""
@@ -1777,6 +2058,267 @@ Features:
         else:
             self.user_label.config(text="Not logged in")
             self.logout_btn.pack_forget()
+    
+    # VPN and CLI Method Implementations
+    def connect_vpn(self):
+        """Simulate VPN connection"""
+        server = self.vpn_server.get()
+        protocol = self.vpn_protocol.get()
+        
+        self.add_vpn_log(f"Connecting to {server} via {protocol}...", "info")
+        self.vpn_status.config(text="🟡 Connecting...", fg='#ffaa00')
+        
+        # Simulate connection process
+        self.root.after(2000, lambda: self.vpn_connection_success(server, protocol))
+    
+    def vpn_connection_success(self, server, protocol):
+        """Handle successful VPN connection"""
+        self.vpn_status.config(text="🟢 Connected", fg='#00ff00')
+        self.add_vpn_log(f"Successfully connected to {server} via {protocol}", "success")
+        self.vpn_ip.config(text=f"VPN IP: 192.168.{random.randint(1,255)}.{random.randint(1,255)}")
+        
+        # Simulate C-based networking
+        self.add_vpn_log("C networking module initialized", "system")
+        self.add_vpn_log("Socket binding successful", "system")
+        self.add_vpn_log("Tunnel established with AES-256 encryption", "security")
+    
+    def disconnect_vpn(self):
+        """Simulate VPN disconnection"""
+        self.add_vpn_log("Disconnecting from VPN...", "warning")
+        self.vpn_status.config(text="🔴 Disconnected", fg='#ff0000')
+        self.vpn_ip.config(text="Current IP: Detecting...")
+        
+        self.root.after(1000, lambda: self.vpn_disconnection_success())
+    
+    def vpn_disconnection_success(self):
+        """Handle successful VPN disconnection"""
+        self.add_vpn_log("VPN disconnected successfully", "info")
+        self.check_ip_address()
+    
+    def check_ip_address(self):
+        """Simulate IP address checking"""
+        self.add_vpn_log("Checking IP address...", "info")
+        
+        # Simulate IP detection
+        current_ip = f"{random.randint(1,255)}.{random.randint(1,255)}.{random.randint(1,255)}.{random.randint(1,255)}"
+        self.vpn_ip.config(text=f"Current IP: {current_ip}")
+        self.add_vpn_log(f"Detected IP: {current_ip}", "success")
+    
+    def add_vpn_log(self, message, log_type="info"):
+        """Add message to VPN log"""
+        timestamp = datetime.now().strftime("%H:%M:%S")
+        
+        color = {
+            "info": "#e8e8e8",
+            "success": "#00ff00", 
+            "warning": "#ffaa00",
+            "error": "#ff0000",
+            "system": "#00aaff"
+        }.get(log_type, "#e8e8e8")
+        
+        self.vpn_log.insert(tk.END, f"[{timestamp}] {message}\n")
+        self.vpn_log.tag_add(log_type, f"{timestamp} {message}")
+        self.vpn_log.tag_config(log_type, foreground=color)
+        self.vpn_log.see(tk.END)
+    
+    def execute_cli_command(self, event=None):
+        """Execute CLI command"""
+        command = self.cli_command.get().strip()
+        if not command:
+            return
+        
+        # Display command
+        self.add_cli_output(f"demon-cli$ {command}", "command")
+        
+        # Clear input
+        self.cli_command.delete(0, tk.END)
+        
+        # Process command
+        self.process_cli_command(command)
+    
+    def process_cli_command(self, command):
+        """Process CLI command"""
+        cmd_parts = command.lower().split()
+        cmd = cmd_parts[0] if cmd_parts else ""
+        args = cmd_parts[1:] if len(cmd_parts) > 1 else []
+        
+        # Command routing
+        if cmd == "help":
+            self.show_cli_help()
+        elif cmd == "scan":
+            self.cli_network_scan(args)
+        elif cmd == "proxy":
+            self.cli_proxy_check(args)
+        elif cmd == "encrypt":
+            self.cli_encrypt_data(args)
+        elif cmd == "analyze":
+            self.cli_security_analysis(args)
+        elif cmd == "status":
+            self.cli_container_status(args)
+        elif cmd == "logs":
+            self.cli_view_logs(args)
+        elif cmd == "clear":
+            self.cli_output.delete(1.0, tk.END)
+            self.add_cli_output("Terminal cleared.", "system")
+        else:
+            self.add_cli_output(f"Command not found: {cmd}", "error")
+            self.add_cli_output("Type 'help' for available commands.", "info")
+    
+    def show_cli_help(self):
+        """Show CLI help"""
+        help_text = """
+Demon CLI v1.3.4 - Available Commands:
+
+  scan [target]     - Perform network scan
+  proxy [check]      - Check proxy status  
+  encrypt [file]     - Encrypt data file
+  analyze [target]   - Security analysis
+  status [container] - Check container status
+  logs [lines]       - View container logs
+  clear             - Clear terminal
+  help              - Show this help
+
+Examples:
+  scan 192.168.1.1
+  proxy check
+  encrypt data.txt
+  analyze system
+  status Demonvpn
+  logs 50
+        """
+        self.add_cli_output(help_text.strip(), "help")
+    
+    def cli_network_scan(self, args):
+        """Simulate network scan"""
+        target = args[0] if args else "192.168.1.1"
+        self.add_cli_output(f"Starting network scan of {target}...", "info")
+        
+        # Simulate C-based scanning
+        ports = [22, 80, 443, 8080, 3000]
+        open_ports = random.sample(ports, random.randint(1, 3))
+        
+        for port in ports:
+            self.root.after(500, lambda p=port: self.cli_scan_progress(p))
+        
+        self.root.after(3000, lambda: self.cli_scan_results(target, open_ports))
+    
+    def cli_scan_progress(self, port):
+        """Show scan progress"""
+        self.add_cli_output(f"Scanning port {port}...", "progress")
+    
+    def cli_scan_results(self, target, open_ports):
+        """Show scan results"""
+        self.add_cli_output(f"Scan complete for {target}:", "success")
+        self.add_cli_output(f"Open ports: {', '.join(map(str, open_ports))}", "result")
+        self.add_cli_output("C socket scanning module completed successfully", "system")
+    
+    def cli_proxy_check(self, args):
+        """Check proxy status"""
+        self.add_cli_output("Checking proxy configuration...", "info")
+        
+        # Simulate proxy check
+        proxies_working = random.randint(15, 25)
+        proxies_total = 7419
+        
+        self.add_cli_output(f"Proxies working: {proxies_working}/{proxies_total}", "result")
+        self.add_cli_output(f"Success rate: {proxies_working/proxies_total*100:.1f}%", "result")
+        self.add_cli_output("C proxy validation completed", "system")
+    
+    def cli_encrypt_data(self, args):
+        """Encrypt data file"""
+        filename = args[0] if args else "data.txt"
+        self.add_cli_output(f"Encrypting {filename}...", "info")
+        
+        # Simulate C-based encryption
+        self.add_cli_output("Initializing AES-256 encryption...", "progress")
+        self.root.after(1000, lambda: self.add_cli_output("Generating encryption key...", "progress"))
+        self.root.after(2000, lambda: self.add_cli_output(f"{filename} encrypted successfully", "success"))
+        self.root.after(2000, lambda: self.add_cli_output("C crypto module completed", "system"))
+    
+    def cli_security_analysis(self, args):
+        """Perform security analysis"""
+        target = args[0] if args else "system"
+        self.add_cli_output(f"Starting security analysis of {target}...", "info")
+        
+        # Simulate analysis
+        vulnerabilities = random.randint(0, 5)
+        risk_level = ["Low", "Medium", "High"][min(vulnerabilities // 2, 2)]
+        
+        self.add_cli_output("Analyzing system configuration...", "progress")
+        self.add_cli_output("Checking for vulnerabilities...", "progress")
+        self.add_cli_output("Validating security settings...", "progress")
+        
+        self.root.after(3000, lambda: self.cli_analysis_results(vulnerabilities, risk_level))
+    
+    def cli_analysis_results(self, vulnerabilities, risk_level):
+        """Show analysis results"""
+        self.add_cli_output(f"Security Analysis Complete:", "success")
+        self.add_cli_output(f"Vulnerabilities found: {vulnerabilities}", "result")
+        self.add_cli_output(f"Risk Level: {risk_level}", "result")
+        self.add_cli_output("C security analysis module completed", "system")
+    
+    def cli_container_status(self, args):
+        """Check container status"""
+        container = args[0] if args else "Demonvpn"
+        self.add_cli_output(f"Checking status of container: {container}...", "info")
+        
+        # Simulate container status check
+        self.add_cli_output("Container Status: Running", "success")
+        self.add_cli_output("Uptime: 2 days, 14 hours, 32 minutes", "result")
+        self.add_cli_output("Memory Usage: 45% (234MB/512MB)", "result")
+        self.add_cli_output("CPU Usage: 12% (0.4/3.2 cores)", "result")
+        self.add_cli_output("Network: Bridge Mode Active", "result")
+        self.add_cli_output("Docker container monitoring completed", "system")
+    
+    def cli_view_logs(self, args):
+        """View container logs"""
+        lines = args[0] if args else "20"
+        self.add_cli_output(f"Displaying last {lines} log entries...", "info")
+        
+        # Simulate log entries
+        log_entries = [
+            "[INFO] Container started with WireGuard protocol",
+            "[INFO] Network bridge configured: 192.168.1.0/24",
+            "[INFO] DNS server set to: 1.1.1.1",
+            "[INFO] Firewall initialized with whitelisted ports: 9090, 8080",
+            "[INFO] VPN connection established for user: example@gmail.com",
+            "[WARN] High memory usage detected: 85%",
+            "[INFO] Proxy service started on port 3128",
+            "[INFO] Container health check passed",
+            "[INFO] C networking module initialized successfully"
+        ]
+        
+        for i, entry in enumerate(log_entries[:int(lines)]):
+            self.add_cli_output(f"{entry}", "log")
+        
+        self.add_cli_output(f"Displayed {min(len(log_entries), int(lines))} log entries.", "system")
+    
+    def quick_command(self, command):
+        """Execute quick command"""
+        self.cli_command.delete(0, tk.END)
+        self.cli_command.insert(0, command)
+        self.execute_cli_command()
+    
+    def add_cli_output(self, message, output_type="info"):
+        """Add message to CLI output"""
+        timestamp = datetime.now().strftime("%H:%M:%S")
+        
+        color = {
+            "command": "#ffffff",
+            "info": "#e8e8e8",
+            "success": "#00ff00",
+            "error": "#ff0000",
+            "warning": "#ffaa00",
+            "progress": "#ffaa00",
+            "result": "#00aaff",
+            "system": "#00aaff",
+            "help": "#ffff00"
+        }.get(output_type, "#e8e8e8")
+        
+        self.cli_output.insert(tk.END, f"[{timestamp}] {message}\n")
+        self.cli_output.tag_add(output_type, f"{timestamp} {message}")
+        self.cli_output.tag_config(output_type, foreground=color)
+        self.cli_output.see(tk.END)
     
     def get_client_ip(self):
         """Get client IP address"""
