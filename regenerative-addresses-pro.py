@@ -717,8 +717,26 @@ class RegenerativeAddressesToolPro:
         logo_frame = ttk.Frame(header, style='Medium.TFrame')
         logo_frame.pack(side=tk.LEFT, padx=10, pady=5)
         
-        ttk.Label(logo_frame, text="◉", style='Title.TLabel', 
-                 font=('Segoe UI', 20)).pack(side=tk.LEFT)
+        # Add login image
+        try:
+            from PIL import Image, ImageTk
+            import os
+            
+            login_image_path = os.path.join(os.path.dirname(__file__), "login.jpg")
+            if os.path.exists(login_image_path):
+                login_image = Image.open(login_image_path)
+                login_image = login_image.resize((30, 30), Image.Resampling.LANCZOS)
+                login_photo = ImageTk.PhotoImage(login_image)
+                
+                login_img_label = ttk.Label(logo_frame, image=login_photo, style='Medium.TFrame')
+                login_img_label.pack(side=tk.LEFT, padx=(0, 5))
+            else:
+                ttk.Label(logo_frame, text="◉", style='Title.TLabel', 
+                         font=('Segoe UI', 20)).pack(side=tk.LEFT)
+        except:
+            ttk.Label(logo_frame, text="◉", style='Title.TLabel', 
+                     font=('Segoe UI', 20)).pack(side=tk.LEFT)
+        
         ttk.Label(logo_frame, text="Regenerative Addresses Tool Pro", 
                  style='Title.TLabel').pack(side=tk.LEFT, padx=(5, 0))
         
@@ -1716,30 +1734,31 @@ Features:
         # Custom booting logo image
         try:
             from PIL import Image, ImageTk
-            import urllib.request
-            import io
+            import os
             
-            # Load booting logo
-            boot_response = urllib.request.urlopen("https://assets.grok.com/users/a3c2219c-c385-4737-a2a0-ef5332f398d3/generated/5db3c20f-3b0a-4d58-ade0-951177dc6aec/image.jpg")
-            boot_image_data = boot_response.read()
-            boot_image = Image.open(io.BytesIO(boot_image_data))
-            boot_image = boot_image.resize((120, 120), Image.Resampling.LANCZOS)
-            boot_photo = ImageTk.PhotoImage(boot_image)
-            
-            boot_frame = ttk.Frame(intro_frame, style='Dark.TFrame')
-            boot_frame.pack(side=tk.LEFT, padx=(0, 20))
-            
-            boot_img_label = ttk.Label(boot_frame, image=boot_photo, style='Dark.TFrame')
-            boot_img_label.pack()
-            
-            boot_info_frame = ttk.Frame(intro_frame, style='Dark.TFrame')
-            boot_info_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
-            
-            ttk.Label(boot_info_frame, text="DemonVPN Booting...", 
-                     font=('Segoe UI', 14, 'bold'), style='Info.TLabel').pack(anchor=tk.W)
-            ttk.Label(boot_info_frame, text="Initializing C-based networking...", 
-                     font=('Segoe UI', 11), style='Info.TLabel').pack(anchor=tk.W, pady=5)
-            
+            # Load local booting logo
+            boot_image_path = os.path.join(os.path.dirname(__file__), "demon.jpg")
+            if os.path.exists(boot_image_path):
+                boot_image = Image.open(boot_image_path)
+                boot_image = boot_image.resize((120, 120), Image.Resampling.LANCZOS)
+                boot_photo = ImageTk.PhotoImage(boot_image)
+                
+                boot_frame = ttk.Frame(intro_frame, style='Dark.TFrame')
+                boot_frame.pack(side=tk.LEFT, padx=(0, 20))
+                
+                boot_img_label = ttk.Label(boot_frame, image=boot_photo, style='Dark.TFrame')
+                boot_img_label.pack()
+                
+                boot_info_frame = ttk.Frame(intro_frame, style='Dark.TFrame')
+                boot_info_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+                
+                ttk.Label(boot_info_frame, text="DemonVPN Booting...", 
+                         font=('Segoe UI', 14, 'bold'), style='Info.TLabel').pack(anchor=tk.W)
+                ttk.Label(boot_info_frame, text="Initializing C-based networking...", 
+                         font=('Segoe UI', 11), style='Info.TLabel').pack(anchor=tk.W, pady=5)
+            else:
+                raise FileNotFoundError("demon.jpg not found")
+                
         except Exception as e:
             boot_frame = ttk.Frame(intro_frame, style='Dark.TFrame')
             boot_frame.pack(side=tk.LEFT, padx=(0, 20))
@@ -1891,8 +1910,7 @@ Features:
         # Side bars container
         try:
             from PIL import Image, ImageTk
-            import urllib.request
-            import io
+            import os
             
             side_bars_container = ttk.Frame(side_bars_frame, style='Dark.TFrame')
             side_bars_container.pack(fill=tk.X, pady=10)
@@ -1902,17 +1920,19 @@ Features:
             side1_frame.pack(side=tk.LEFT, padx=10)
             
             try:
-                side1_response = urllib.request.urlopen("https://assets.grok.com/users/a3c2219c-c385-4737-a2a0-ef5332f398d3/generated/dd8dc4ed-3651-45c4-bcf9-d729ff06651b/image.jpg")
-                side1_image_data = side1_response.read()
-                side1_image = Image.open(io.BytesIO(side1_image_data))
-                side1_image = side1_image.resize((80, 80), Image.Resampling.LANCZOS)
-                side1_photo = ImageTk.PhotoImage(side1_image)
-                
-                side1_img_frame = ttk.Frame(side1_frame, style='Dark.TFrame')
-                side1_img_frame.pack()
-                
-                side1_img_label = ttk.Label(side1_img_frame, image=side1_photo, style='Dark.TFrame')
-                side1_img_label.pack()
+                side1_image_path = os.path.join(os.path.dirname(__file__), "EV.jpg")
+                if os.path.exists(side1_image_path):
+                    side1_image = Image.open(side1_image_path)
+                    side1_image = side1_image.resize((80, 80), Image.Resampling.LANCZOS)
+                    side1_photo = ImageTk.PhotoImage(side1_image)
+                    
+                    side1_img_frame = ttk.Frame(side1_frame, style='Dark.TFrame')
+                    side1_img_frame.pack()
+                    
+                    side1_img_label = ttk.Label(side1_img_frame, image=side1_photo, style='Dark.TFrame')
+                    side1_img_label.pack()
+                else:
+                    raise FileNotFoundError("EV.jpg not found")
                 
             except Exception as e:
                 side1_img_frame = ttk.Frame(side1_frame, style='Dark.TFrame')
@@ -1942,17 +1962,19 @@ Features:
             side2_frame.pack(side=tk.LEFT, padx=10)
             
             try:
-                side2_response = urllib.request.urlopen("https://assets.grok.com/users/a3c2219c-c385-4737-a2a0-ef5332f398d3/generated/31973508-ae5a-40fa-9d1f-2c34af39f0cc/image.jpg")
-                side2_image_data = side2_response.read()
-                side2_image = Image.open(io.BytesIO(side2_image_data))
-                side2_image = side2_image.resize((80, 80), Image.Resampling.LANCZOS)
-                side2_photo = ImageTk.PhotoImage(side2_image)
-                
-                side2_img_frame = ttk.Frame(side2_frame, style='Dark.TFrame')
-                side2_img_frame.pack()
-                
-                side2_img_label = ttk.Label(side2_img_frame, image=side2_photo, style='Dark.TFrame')
-                side2_img_label.pack()
+                side2_image_path = os.path.join(os.path.dirname(__file__), "wmap.jpg")
+                if os.path.exists(side2_image_path):
+                    side2_image = Image.open(side2_image_path)
+                    side2_image = side2_image.resize((80, 80), Image.Resampling.LANCZOS)
+                    side2_photo = ImageTk.PhotoImage(side2_image)
+                    
+                    side2_img_frame = ttk.Frame(side2_frame, style='Dark.TFrame')
+                    side2_img_frame.pack()
+                    
+                    side2_img_label = ttk.Label(side2_img_frame, image=side2_photo, style='Dark.TFrame')
+                    side2_img_label.pack()
+                else:
+                    raise FileNotFoundError("wmap.jpg not found")
                 
             except Exception as e:
                 side2_img_frame = ttk.Frame(side2_frame, style='Dark.TFrame')
@@ -1994,25 +2016,36 @@ Features:
         # Custom connection success image
         try:
             from PIL import Image, ImageTk
-            import urllib.request
-            import io
+            import os
             
             # Load connection success image
-            success_response = urllib.request.urlopen("https://assets.grok.com/users/a3c2219c-c385-4737-a2a0-ef5332f398d3/generated/48a016ad-bd3c-48df-9445-467f938b304b/image.jpg")
-            success_image_data = success_response.read()
-            success_image = Image.open(io.BytesIO(success_image_data))
-            success_image = success_image.resize((100, 100), Image.Resampling.LANCZOS)
-            success_photo = ImageTk.PhotoImage(success_image)
-            
-            success_img_frame = ttk.Frame(success_frame, style='Dark.TFrame')
-            success_img_frame.pack(side=tk.LEFT, padx=(0, 20))
-            
-            success_img_label = ttk.Label(success_img_frame, image=success_photo, style='Dark.TFrame')
-            success_img_label.pack()
-            
-            # Connection success details
+            success_image_path = os.path.join(os.path.dirname(__file__), "connectionsuccessfull.jpg")
+            if os.path.exists(success_image_path):
+                success_image = Image.open(success_image_path)
+                success_image = success_image.resize((100, 100), Image.Resampling.LANCZOS)
+                success_photo = ImageTk.PhotoImage(success_image)
+                
+                success_img_frame = ttk.Frame(success_frame, style='Dark.TFrame')
+                success_img_frame.pack(side=tk.LEFT, padx=(0, 20))
+                
+                success_img_label = ttk.Label(success_img_frame, image=success_photo, style='Dark.TFrame')
+                success_img_label.pack()
+                
+                # Connection success details
+                success_details_frame = ttk.Frame(success_frame, style='Dark.TFrame')
+                success_details_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+                
+                ttk.Label(success_details_frame, text="🎉 VPN Connected Successfully!", 
+                         font=('Segoe UI', 16, 'bold'), style='Success.TLabel').pack(anchor=tk.W)
+                ttk.Label(success_details_frame, text="C-based WireGuard tunnel established", 
+                         font=('Segoe UI', 12), style='Info.TLabel').pack(anchor=tk.W, pady=5)
+            else:
+                raise FileNotFoundError("connectionsuccessfull.jpg not found")
+                
+        except Exception as e:
+            # Fallback if image not found
             success_details_frame = ttk.Frame(success_frame, style='Dark.TFrame')
-            success_details_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+            success_details_frame.pack(fill=tk.BOTH, expand=True)
             
             ttk.Label(success_details_frame, text="🎉 VPN Connected Successfully!", 
                      font=('Segoe UI', 16, 'bold'), style='Success.TLabel').pack(anchor=tk.W)
@@ -2342,7 +2375,27 @@ Features:
         cli_frame.pack(fill=tk.BOTH, expand=True, pady=20)
         
         # CLI icon and message
-        ttk.Label(cli_frame, text="💻", font=('Segoe UI', 48), style='Info.TLabel').pack(pady=10)
+        try:
+            from PIL import Image, ImageTk
+            import os
+            
+            # Load CLI icon
+            cli_image_path = os.path.join(os.path.dirname(__file__), "clietnchoices.jpg")
+            if os.path.exists(cli_image_path):
+                cli_image = Image.open(cli_image_path)
+                cli_image = cli_image.resize((80, 80), Image.Resampling.LANCZOS)
+                cli_photo = ImageTk.PhotoImage(cli_image)
+                
+                cli_img_frame = ttk.Frame(cli_frame, style='Dark.TFrame')
+                cli_img_frame.pack(pady=10)
+                
+                cli_img_label = ttk.Label(cli_img_frame, image=cli_photo, style='Dark.TFrame')
+                cli_img_label.pack()
+            else:
+                ttk.Label(cli_frame, text="💻", font=('Segoe UI', 48), style='Info.TLabel').pack(pady=10)
+                
+        except Exception as e:
+            ttk.Label(cli_frame, text="💻", font=('Segoe UI', 48), style='Info.TLabel').pack(pady=10)
         
         ttk.Label(cli_frame, text="Demon CLI - Docker Container Command Line", 
                  font=('Segoe UI', 16, 'bold'), style='Info.TLabel').pack(pady=10)
@@ -2401,6 +2454,43 @@ Features:
         # Docker Commands
         docker_frame = ttk.LabelFrame(cli_frame, text="Docker Commands", style='Card.TLabelframe', padding="15")
         docker_frame.pack(fill=tk.X, pady=15)
+        
+        # Docker images
+        try:
+            from PIL import Image, ImageTk
+            import os
+            
+            docker_images_frame = ttk.Frame(docker_frame, style='Dark.TFrame')
+            docker_images_frame.pack(fill=tk.X, pady=5)
+            
+            # Load Docker images
+            docker_images = [
+                ("dockershit.jpg", "Docker Container"),
+                ("dockershit2.jpg", "Docker Interface")
+            ]
+            
+            for img_name, img_desc in docker_images:
+                img_path = os.path.join(os.path.dirname(__file__), img_name)
+                if os.path.exists(img_path):
+                    try:
+                        docker_img = Image.open(img_path)
+                        docker_img = docker_img.resize((60, 60), Image.Resampling.LANCZOS)
+                        docker_photo = ImageTk.PhotoImage(docker_img)
+                        
+                        img_container = ttk.Frame(docker_images_frame, style='Dark.TFrame')
+                        img_container.pack(side=tk.LEFT, padx=10)
+                        
+                        img_label = ttk.Label(img_container, image=docker_photo, style='Dark.TFrame')
+                        img_label.pack()
+                        
+                        desc_label = ttk.Label(img_container, text=img_desc, 
+                                            font=('Segoe UI', 9), style='Info.TLabel')
+                        desc_label.pack()
+                    except:
+                        pass
+                        
+        except Exception as e:
+            pass
         
         ttk.Label(docker_frame, text="🐳 Docker CLI Commands:", 
                  font=('Segoe UI', 11, 'bold'), style='Info.TLabel').pack(anchor=tk.W, pady=5)

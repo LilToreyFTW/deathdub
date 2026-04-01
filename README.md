@@ -56,16 +56,16 @@ docker run -d --name rat-pro -p 8080:8080 rat-pro:v3.1
 - **🐳 Docker Support** - Full containerization with privileged access
 
 ### **Professional VPN Features:**
-![DemonVPN Boot Sequence](https://assets.grok.com/users/a3c2219c-c385-4737-a2a0-ef5332f398d3/generated/5db3c20f-3b0a-4d58-ade0-951177dc6aec/image.jpg)
+![DemonVPN Boot Sequence](./demon.jpg)
 
 - **🔐 DemonVPN Boot Sequence** - Professional initialization with C-based networking
-- **� Real-time Monitoring** - Live connection status and performance metrics
+- **📊 Real-time Monitoring** - Live connection status and performance metrics
 - **🌍 Server Selection** - Multiple server locations (US, CA, NL, JP, GB)
 - **🔧 Protocol Support** - WireGuard and OpenVPN protocols
 - **📱 Custom Interface** - Professional UI with real-time status indicators
 
 ### **Advanced Security:**
-![DemonVPN Interface](https://assets.grok.com/users/a3c2219c-c385-4737-a2a0-ef5332f398d3/generated/8f4c2b3d-9a1e-4f5c-8b7d-2e3f9a6c8d1e/image.jpg)
+![DemonVPN Interface](./EV.jpg)
 
 - **🔒 AES-256-GCM Encryption** - Military-grade encryption
 - **🔄 Key Rotation** - Automated key management
@@ -77,7 +77,7 @@ docker run -d --name rat-pro -p 8080:8080 rat-pro:v3.1
 ## 💻 **Demon CLI Tools**
 
 ### **Professional Command Line Interface:**
-![Demon CLI Interface](https://assets.grok.com/users/a3c2219c-c385-4737-a2a0-ef5332f398d3/generated/9d5e3f4a-2b1c-4d8e-9f7a-3c4b5d6e7f8g/image.jpg)
+![Demon CLI Interface](./clietnchoices.jpg)
 
 - **🔍 Network Scanning** - Real nmap integration with AI analysis
 - **🔧 Proxy Operations** - Advanced proxy testing and validation
@@ -85,36 +85,34 @@ docker run -d --name rat-pro -p 8080:8080 rat-pro:v3.1
 - **📊 System Monitoring** - Real-time system resource tracking
 - **🐳 Container Management** - Docker operations and monitoring
 
----
+### **Docker Integration:**
+![Docker Container](./dockershit.jpg) ![Docker Interface](./dockershit2.jpg)
 
-## 🔗 **Core Features**
-
-### **Advanced Address Generation:**
-- **🤖 AI-Optimized Generation** - Machine learning for optimal patterns
-- **🔗 Multiple Techniques** - Random, timestamp, hash-based, custom methods
-- **📊 Real-time Validation** - Instant link checking and verification
-- **📈 Analytics Tracking** - Comprehensive performance metrics
-- **💾 Database Integration** - SQLite with advanced logging
-
-### **Enhanced Proxy Management:**
-- **🔍 Smart Testing** - AI-powered proxy validation
-- **📊 Performance Metrics** - Speed and reliability analysis
-- **🔄 Bulk Operations** - Automated proxy management
-- **🌍 Multi-Protocol Support** - HTTP, HTTPS, SOCKS4, SOCKS5
-- **📈 Predictive Performance** - ML-based performance forecasting
+- **� Container Management** - Professional Docker operations
+- **� Privileged Access** - NET_ADMIN capabilities for VPN
+- **📊 Resource Monitoring** - Real-time container metrics
+- **🔄 Automated Deployment** - CI/CD pipeline integration
 
 ---
 
-## � **Modern User Interface**
+## 🎨 **Modern User Interface**
 
 ### **Professional Dark Theme:**
-![DemonVPN Login](https://assets.grok.com/users/a3c2219c-c385-4737-a2a0-ef5332f398d3/generated/7a8b9c1d-2e3f-4a5b-9c8d-1e2f3a4b5c6d/image.jpg)
+![DemonVPN Login](./login.jpg)
 
 - **🎯 Custom Images** - Professional branding and visual elements
 - **📱 Responsive Design** - Adaptive layout for different screen sizes
 - **🔄 Real-time Updates** - Live status indicators and progress bars
 - **🎨 Modern Components** - Professional UI with smooth animations
 - **📊 Dashboard Analytics** - Comprehensive statistics and monitoring
+
+### **Connection Success:**
+![Connection Success](./connectionsuccessfull.jpg)
+
+- **✅ Connection Status** - Real-time VPN connection monitoring
+- **📊 Performance Metrics** - Live speed and latency tracking
+- **🔐 Security Indicators** - Encryption and protocol status
+- **🌐 Server Information** - Connected server details
 
 ---
 
