@@ -20,6 +20,10 @@ echo Installing dependencies...
 python -m pip install --upgrade pip
 python -m pip install pyinstaller
 python -m pip install requests>=2.31.0
+python -m pip install urllib3>=2.0.0
+python -m pip install certifi>=2023.0.0
+python -m pip install charset-normalizer>=3.3.0
+python -m pip install idna>=3.4.0
 python -m pip install Pillow>=10.0.0
 python -m pip install python-dotenv>=1.0.0
 python -m pip install psutil>=5.9.0
@@ -28,6 +32,10 @@ python -m pip install cryptography>=41.0.0
 REM Create requirements.txt
 echo Creating requirements.txt...
 echo requests>=2.31.0 > requirements.txt
+echo urllib3>=2.0.0 >> requirements.txt
+echo certifi>=2023.0.0 >> requirements.txt
+echo charset-normalizer>=3.3.0 >> requirements.txt
+echo idna>=3.4.0 >> requirements.txt
 echo Pillow>=10.0.0 >> requirements.txt
 echo python-dotenv>=1.0.0 >> requirements.txt
 echo psutil>=5.9.0 >> requirements.txt
@@ -105,6 +113,11 @@ python -m PyInstaller --onefile --windowed --name "RegenerativeAddressesToolPro"
     --add-data "README.md;." ^
     --add-data "requirements.txt;." ^
     --add-data "RELEASE_NOTES_v3.1.md;." ^
+    --collect-all requests ^
+    --collect-all urllib3 ^
+    --collect-all certifi ^
+    --collect-all charset_normalizer ^
+    --collect-all idna ^
     --hidden-import=tkinter ^
     --hidden-import=tkinter.ttk ^
     --hidden-import=tkinter.messagebox ^
@@ -115,6 +128,11 @@ python -m PyInstaller --onefile --windowed --name "RegenerativeAddressesToolPro"
     --hidden-import=PIL.Image ^
     --hidden-import=PIL.ImageTk ^
     --hidden-import=requests ^
+    --hidden-import=requests.adapters ^
+    --hidden-import=requests.auth ^
+    --hidden-import=requests.exceptions ^
+    --hidden-import=requests.sessions ^
+    --hidden-import=requests.utils ^
     --hidden-import=sqlite3 ^
     --hidden-import=hashlib ^
     --hidden-import=uuid ^
@@ -136,6 +154,10 @@ python -m PyInstaller --onefile --windowed --name "RegenerativeAddressesToolPro"
     --hidden-import=io ^
     --hidden-import=psutil ^
     --hidden-import=cryptography ^
+    --hidden-import=urllib ^
+    --hidden-import=urllib.request ^
+    --hidden-import=urllib.parse ^
+    --hidden-import=urllib.error ^
     regenerative-addresses-pro.py
 
 REM Check if build was successful
