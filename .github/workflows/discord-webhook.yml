@@ -1,0 +1,33 @@
+name: Discord Webhook Notification
+
+on:
+  push:
+    branches: [ master ]
+  release:
+    types: [ published ]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Send Discord Notification
+      uses: tsickert/discord-webhook@v1.0.0
+      with:
+        webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        content: |
+          🛡️ **Regenerative Addresses Tool Pro v3.0 Update**
+          
+          **Repository:** LilToreyFTW/deathdub
+          **Branch:** ${{ github.ref_name }}
+          **Commit:** ${{ github.sha }}
+          **Author:** ${{ github.actor }}
+          
+          **Changes:**
+          ${{ github.event.head_commit.message }}
+          
+          🔗 **View Changes:** [GitHub Repository](https://github.com/LilToreyFTW/deathdub)
+          📦 **Download:** [Latest Release](https://github.com/LilToreyFTW/deathdub/releases/latest)
+          ☕ **Support:** [Buy Me a Coffee](https://www.buymeacoffee.com/toreyftw)
+          
+          ---
+          *Professional Security Protection Tool for Legitimate Testing*
