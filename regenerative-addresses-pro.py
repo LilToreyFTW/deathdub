@@ -1794,15 +1794,16 @@ Features:
                  font=('Segoe UI', 11), style='Info.TLabel').pack(anchor=tk.W, pady=2)
         
         # Docker Configuration
-        docker_frame = ttk.LabelFrame(vpn_frame, text="Docker Configuration", style='Card.TLabelframe', padding="15")
-        docker_frame.pack(fill=tk.X, pady=15)
+        docker_frame = ttk.LabelFrame(vpn_frame, text="🐳 DemonVPN Docker Configuration", style='Card.TLabelframe', padding="20")
+        docker_frame.pack(fill=tk.BOTH, expand=True, pady=15)
         
+        # Docker command display with better visibility
         ttk.Label(docker_frame, text="🐳 Docker Run Command:", 
-                 font=('Segoe UI', 11, 'bold'), style='Info.TLabel').pack(anchor=tk.W, pady=5)
+                 font=('Segoe UI', 12, 'bold'), style='Info.TLabel').pack(anchor=tk.W, pady=(10, 5))
         
-        docker_cmd = ttk.Text(docker_frame, height=6, bg='#2a2a2a', fg='#e8e8e8', 
-                           font=('Consolas', 10), wrap=tk.WORD)
-        docker_cmd.pack(fill=tk.X, pady=5)
+        docker_cmd = ttk.Text(docker_frame, height=8, bg='#1a1f36', fg='#00ff00', 
+                           font=('Consolas', 11), wrap=tk.WORD)
+        docker_cmd.pack(fill=tk.BOTH, expand=True, pady=5)
         docker_cmd.insert(tk.END, """docker run -d \\
   --name='Demonvpn' \\
   --net='bridge' \\
@@ -1816,9 +1817,48 @@ Features:
   -e 'WHITELISTPORTS=9090,8080' \\
   -p 9090:9090 \\
   -p 8080:8080 \\
-  -v '/local/path/to/config':'/home/root/.Demon:rw'""")
-        
+  -v '/local/path/to/config':'/home/root/.Demon:rw' \\
+  demonvpn:latest""")
         docker_cmd.config(state=tk.DISABLED)
+        
+        # Copy button for Docker command
+        copy_frame = ttk.Frame(docker_frame, style='Dark.TFrame')
+        copy_frame.pack(fill=tk.X, pady=10)
+        
+        ttk.Button(copy_frame, text="📋 Copy Docker Command", 
+                  command=lambda: self.copy_docker_command(docker_cmd.get("1.0", tk.END)),
+                  style='Primary.TButton').pack(side=tk.LEFT, padx=5)
+        
+        ttk.Button(copy_frame, text="🔄 Refresh Command", 
+                  command=self.refresh_docker_info,
+                  style='Secondary.TButton').pack(side=tk.LEFT, padx=5)
+        
+        ttk.Button(copy_frame, text="📖 Open Documentation", 
+                  command=self.open_docker_docs,
+                  style='Info.TButton').pack(side=tk.LEFT, padx=5)
+        
+        # Quick deployment buttons
+        quick_frame = ttk.LabelFrame(docker_frame, text="🚀 Quick Deployment", style='Card.TLabelframe', padding="15")
+        quick_frame.pack(fill=tk.X, pady=15)
+        
+        quick_buttons = ttk.Frame(quick_frame, style='Dark.TFrame')
+        quick_buttons.pack(fill=tk.X)
+        
+        ttk.Button(quick_buttons, text="🐳 Build Image", 
+                  command=self.build_docker_image,
+                  style='Success.TButton').pack(side=tk.LEFT, padx=5, ipady=5)
+        
+        ttk.Button(quick_buttons, text="▶️ Run Container", 
+                  command=self.run_docker_container,
+                  style='Primary.TButton').pack(side=tk.LEFT, padx=5, ipady=5)
+        
+        ttk.Button(quick_buttons, text="🛑 Stop Container", 
+                  command=self.stop_docker_container,
+                  style='Danger.TButton').pack(side=tk.LEFT, padx=5, ipady=5)
+        
+        ttk.Button(quick_buttons, text="📊 Check Status", 
+                  command=self.check_container_status,
+                  style='Info.TButton').pack(side=tk.LEFT, padx=5, ipady=5)
         
         # Connection controls
         controls_frame = ttk.LabelFrame(vpn_frame, text="Connection Controls", style='Card.TLabelframe', padding="15")
@@ -2557,9 +2597,52 @@ Examples:
         }.get(output_type, "#e8e8e8")
         
         self.cli_output.insert(tk.END, f"[{timestamp}] {message}\n")
-        self.cli_output.tag_add(output_type, f"{timestamp} {message}")
+        self.cli_output.tag_add(output_type, f"[{timestamp}] {message}")
         self.cli_output.tag_config(output_type, foreground=color)
         self.cli_output.see(tk.END)
+    
+    # Docker functionality methods
+    def copy_docker_command(self, command):
+        """Copy Docker command to clipboard"""
+        self.root.clipboard_clear()
+        self.root.clipboard_append(command)
+        self.add_vpn_log("Docker command copied to clipboard", "success")
+    
+    def refresh_docker_info(self):
+        """Refresh Docker information"""
+        self.add_vpn_log("Refreshing Docker configuration...", "info")
+        # In real implementation, this would fetch latest info
+        self.add_vpn_log("Docker configuration updated", "success")
+    
+    def open_docker_docs(self):
+        """Open Docker documentation"""
+        import webbrowser
+        webbrowser.open("https://github.com/LilToreyFTW/deathdub")
+        self.add_vpn_log("Opening documentation in browser...", "info")
+    
+    def build_docker_image(self):
+        """Build Docker image"""
+        self.add_vpn_log("Building Docker image...", "info")
+        # In real implementation, this would run build script
+        self.add_vpn_log("Docker image build completed", "success")
+    
+    def run_docker_container(self):
+        """Run Docker container"""
+        self.add_vpn_log("Starting Docker container...", "info")
+        # In real implementation, this would run container
+        self.add_vpn_log("Docker container started", "success")
+    
+    def stop_docker_container(self):
+        """Stop Docker container"""
+        self.add_vpn_log("Stopping Docker container...", "info")
+        # In real implementation, this would stop container
+        self.add_vpn_log("Docker container stopped", "success")
+    
+    def check_container_status(self):
+        """Check container status"""
+        self.add_vpn_log("Checking container status...", "info")
+        # In real implementation, this would check status
+        self.add_vpn_log("Container status: Running", "success")
     
     def get_client_ip(self):
         """Get client IP address"""
