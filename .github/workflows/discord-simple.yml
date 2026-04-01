@@ -1,0 +1,18 @@
+name: Simple Discord Webhook
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  discord:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send to Discord
+        run: |
+          curl -X POST \
+            -H "Content-Type: application/json" \
+            -d '{
+              "content": "🛡️ **Regenerative Addresses Tool Pro v3.0 Update**\n\n**Repository:** LilToreyFTW/deathdub\n**Branch:** ${{ github.ref_name }}\n**Commit:** ${{ github.sha }}\n**Author:** ${{ github.actor }}\n\n**Changes:**\n${{ github.event.head_commit.message }}\n\n🔗 **View Changes:** [GitHub Repository](https://github.com/LilToreyFTW/deathdub)\n📦 **Download:** [Latest Release](https://github.com/LilToreyFTW/deathdub/releases/latest)\n☕ **Support:** [Buy Me a Coffee](https://www.buymeacoffee.com/toreyftw)\n\n---\n*Professional Security Protection Tool for Legitimate Testing*"
+            }' \
+            "${{ secrets.DISCORD_WEBHOOK_URL }}"
