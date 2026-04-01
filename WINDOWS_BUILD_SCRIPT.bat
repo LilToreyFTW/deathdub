@@ -105,60 +105,39 @@ except Exception as e:
     print(f'Could not create icon: {e}')
 "
 
-REM Build executable for v3.1.0
-echo Building Regenerative Addresses Tool Pro v3.1.0...
-python -m PyInstaller --onefile --windowed --name "RegenerativeAddressesToolPro" ^
-    --icon=icon.ico ^
-    --version-file=version_info.txt ^
-    --add-data "README.md;." ^
-    --add-data "requirements.txt;." ^
-    --add-data "RELEASE_NOTES_v3.1.md;." ^
+REM Test build for debugging requests module
+echo Creating test build to debug requests module...
+python -m PyInstaller --onefile --windowed --name "TestRequests" ^
     --collect-all requests ^
     --collect-all urllib3 ^
     --collect-all certifi ^
     --collect-all charset_normalizer ^
     --collect-all idna ^
-    --hidden-import=tkinter ^
-    --hidden-import=tkinter.ttk ^
-    --hidden-import=tkinter.messagebox ^
-    --hidden-import=tkinter.scrolledtext ^
-    --hidden-import=tkinter.filedialog ^
-    --hidden-import=tkinter.simpledialog ^
-    --hidden-import=PIL ^
-    --hidden-import=PIL.Image ^
-    --hidden-import=PIL.ImageTk ^
     --hidden-import=requests ^
-    --hidden-import=requests.adapters ^
-    --hidden-import=requests.auth ^
-    --hidden-import=requests.exceptions ^
-    --hidden-import=requests.sessions ^
-    --hidden-import=requests.utils ^
-    --hidden-import=sqlite3 ^
-    --hidden-import=hashlib ^
-    --hidden-import=uuid ^
-    --hidden-import=datetime ^
-    --hidden-import=threading ^
-    --hidden-import=socket ^
-    --hidden-import=subprocess ^
-    --hidden-import=webbrowser ^
-    --hidden-import=ssl ^
-    --hidden-import=json ^
-    --hidden-import=base64 ^
-    --hidden-import=time ^
-    --hidden-import=os ^
-    --hidden-import=sys ^
-    --hidden-import=random ^
-    --hidden-import=string ^
-    --hidden-import=ipaddress ^
-    --hidden-import=re ^
-    --hidden-import=io ^
-    --hidden-import=psutil ^
-    --hidden-import=cryptography ^
-    --hidden-import=urllib ^
+    --hidden-import=urllib3 ^
+    --hidden-import=certifi ^
+    --hidden-import=charset_normalizer ^
+    --hidden-import=idna ^
     --hidden-import=urllib.request ^
     --hidden-import=urllib.parse ^
     --hidden-import=urllib.error ^
-    regenerative-addresses-pro.py
+    test_requests.py
+
+if exist "dist\TestRequests.exe" (
+    echo.
+    echo SUCCESS! Test executable created:
+    echo dist\TestRequests.exe
+    echo.
+    echo Run this test executable to check if requests module works
+    echo.
+) else (
+    echo.
+    echo ERROR: Test build failed!
+)
+
+REM Build executable for v3.1.0 using spec file
+echo Building Regenerative Addresses Tool Pro v3.1.0 using spec file...
+python -m PyInstaller regenerative-addresses-tool.spec
 
 REM Check if build was successful
 if exist "dist\RegenerativeAddressesToolPro.exe" (
