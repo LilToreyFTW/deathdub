@@ -22,11 +22,6 @@ a = Analysis(
         'PIL.Image',
         'PIL.ImageTk',
         'requests',
-        'requests.adapters',
-        'requests.auth',
-        'requests.exceptions',
-        'requests.sessions',
-        'requests.utils',
         'sqlite3',
         'hashlib',
         'uuid',
@@ -52,27 +47,33 @@ a = Analysis(
         'urllib.request',
         'urllib.parse',
         'urllib.error',
-        'urllib3',
-        'certifi',
-        'charset_normalizer',
-        'idna',
     ],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
-    excludes=[],
+    excludes=[
+        'matplotlib',
+        'numpy',
+        'scipy',
+        'pandas',
+        'jupyter',
+        'notebook',
+        'pytest',
+        'setuptools',
+        'pip',
+        'wheel',
+        'conda',
+        'anaconda',
+        'spyder',
+        'idle',
+        'pycharm',
+        'vscode',
+    ],
     win_no_prefer_redirects=False,
     win_private_assemblies=False,
     cipher=block_cipher,
     noarchive=False,
 )
-
-# Collect all requests dependencies
-a.datas += Tree([(p, p) for p in a.binaries if 'requests' in p[0].lower()])
-a.datas += Tree([(p, p) for p in a.binaries if 'urllib3' in p[0].lower()])
-a.datas += Tree([(p, p) for p in a.binaries if 'certifi' in p[0].lower()])
-a.datas += Tree([(p, p) for p in a.binaries if 'charset' in p[0].lower()])
-a.datas += Tree([(p, p) for p in a.binaries if 'idna' in p[0].lower()])
 
 pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
 
@@ -87,7 +88,7 @@ exe = EXE(
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
-    upx=True,
+    upx=False,  # Disable UPX to avoid ordinal issues
     upx_exclude=[],
     runtime_tmpdir=None,
     console=False,

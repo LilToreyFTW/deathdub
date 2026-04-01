@@ -105,6 +105,28 @@ except Exception as e:
     print(f'Could not create icon: {e}')
 "
 
+REM Test minimal build to isolate ordinal error
+echo Creating minimal test build...
+python -m PyInstaller --onefile --windowed --name "MinimalTest" ^
+    --noupx ^
+    --exclude-module matplotlib ^
+    --exclude-module numpy ^
+    --exclude-module scipy ^
+    --exclude-module pandas ^
+    minimal_test.py
+
+if exist "dist\MinimalTest.exe" (
+    echo.
+    echo SUCCESS! Minimal test executable created:
+    echo dist\MinimalTest.exe
+    echo.
+    echo Run this to test if ordinal error is resolved
+    echo.
+) else (
+    echo.
+    echo ERROR: Minimal test build failed!
+)
+
 REM Test build for debugging requests module
 echo Creating test build to debug requests module...
 python -m PyInstaller --onefile --windowed --name "TestRequests" ^
@@ -121,6 +143,7 @@ python -m PyInstaller --onefile --windowed --name "TestRequests" ^
     --hidden-import=urllib.request ^
     --hidden-import=urllib.parse ^
     --hidden-import=urllib.error ^
+    --noupx ^
     test_requests.py
 
 if exist "dist\TestRequests.exe" (
@@ -135,9 +158,74 @@ if exist "dist\TestRequests.exe" (
     echo ERROR: Test build failed!
 )
 
-REM Build executable for v3.1.0 using spec file
-echo Building Regenerative Addresses Tool Pro v3.1.0 using spec file...
+REM Build executable for v3.1.0 using spec file (fixed ordinal error)
+echo Building Regenerative Addresses Tool Pro v3.1.0 (ordinal error fix)...
 python -m PyInstaller regenerative-addresses-tool.spec
+
+REM Alternative build if spec file fails
+if not exist "dist\RegenerativeAddressesToolPro.exe" (
+    echo.
+    echo Spec file build failed, trying alternative approach...
+    python -m PyInstaller --onefile --windowed --name "RegenerativeAddressesToolPro" ^
+        --icon=icon.ico ^
+        --version-file=version_info.txt ^
+        --add-data "README.md;." ^
+        --add-data "requirements.txt;." ^
+        --add-data "RELEASE_NOTES_v3.1.md;." ^
+        --exclude-module matplotlib ^
+        --exclude-module numpy ^
+        --exclude-module scipy ^
+        --exclude-module pandas ^
+        --exclude-module jupyter ^
+        --exclude-module notebook ^
+        --exclude-module pytest ^
+        --exclude-module setuptools ^
+        --exclude-module pip ^
+        --exclude-module wheel ^
+        --exclude-module conda ^
+        --exclude-module anaconda ^
+        --exclude-module spyder ^
+        --exclude-module idle ^
+        --exclude-module pycharm ^
+        --exclude-module vscode ^
+        --noupx ^
+        --hidden-import=tkinter ^
+        --hidden-import=tkinter.ttk ^
+        --hidden-import=tkinter.messagebox ^
+        --hidden-import=tkinter.scrolledtext ^
+        --hidden-import=tkinter.filedialog ^
+        --hidden-import=tkinter.simpledialog ^
+        --hidden-import=PIL ^
+        --hidden-import=PIL.Image ^
+        --hidden-import=PIL.ImageTk ^
+        --hidden-import=requests ^
+        --hidden-import=sqlite3 ^
+        --hidden-import=hashlib ^
+        --hidden-import=uuid ^
+        --hidden-import=datetime ^
+        --hidden-import=threading ^
+        --hidden-import=socket ^
+        --hidden-import=subprocess ^
+        --hidden-import=webbrowser ^
+        --hidden-import=ssl ^
+        --hidden-import=json ^
+        --hidden-import=base64 ^
+        --hidden-import=time ^
+        --hidden-import=os ^
+        --hidden-import=sys ^
+        --hidden-import=random ^
+        --hidden-import=string ^
+        --hidden-import=ipaddress ^
+        --hidden-import=re ^
+        --hidden-import=io ^
+        --hidden-import=psutil ^
+        --hidden-import=cryptography ^
+        --hidden-import=urllib ^
+        --hidden-import=urllib.request ^
+        --hidden-import=urllib.parse ^
+        --hidden-import=urllib.error ^
+        regenerative-addresses-pro.py
+)
 
 REM Check if build was successful
 if exist "dist\RegenerativeAddressesToolPro.exe" (
