@@ -43,7 +43,9 @@ def create_windows_package():
         "README_REBUILD.md",
         "src",  # Include PHP directory
         "index.php",
-        "api.php"  # NEW v3.0 API
+        "api.php",  # NEW v3.0 API
+        "src/controllers/coffee.php",  # NEW coffee controller
+        "src/views/coffee.min.php"  # NEW coffee view
     ]
     
     print("Creating Windows package v3.0...")
@@ -126,12 +128,10 @@ pause
 - 🛡️ Real Security Scanner and Protection Tools
 - 🔧 System Hardening and Audit Utilities
 - 🌐 Networking Security Education Module
-- 🔗 Professional Link Regeneration (10+ techniques)
-- 🌐 Enhanced Proxy Management (7,419+ addresses)
-- 📊 PHP Web Interface with Security Dashboard
+- ☕ Buy Me a Coffee Support Tab
 - 🚨 Real-time Protection Monitoring
-- 📋 Comprehensive Security Reporting
-- 🎨 Professional Dark Theme Interface
+- 📋 Professional Security Reporting
+- 🎨 Enhanced Dark Theme Interface
 - 💾 SQLite Database Integration
 
 ## SECURITY PROTECTION FEATURES:
@@ -160,6 +160,7 @@ Password: admin
 ## Security Features:
 - KEEP ME SAFE: Real security protection tools
 - KEEP ME SAFE 2: Networking security education
+- ☕ Coffee: Support development
 - Professional vulnerability scanning
 - System hardening and audit capabilities
 - Real-time protection monitoring

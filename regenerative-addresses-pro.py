@@ -878,6 +878,9 @@ class RegenerativeAddressesToolPro:
         # Networking Education tab
         self.create_networking_education_tab(notebook)
         
+        # Buy Me a Coffee tab
+        self.create_coffee_tab(notebook)
+        
         # Update stats
         self.update_dashboard_stats()
     
@@ -1641,6 +1644,60 @@ Features:
             ttk.Button(container, text="Refresh Module", 
                       command=lambda: self.create_networking_education_tab(notebook),
                       style='Primary.TButton').pack(pady=10)
+    
+    def create_coffee_tab(self, notebook):
+        """Create Buy Me a Coffee tab"""
+        frame = ttk.Frame(notebook, style='Dark.TFrame')
+        notebook.add(frame, text=" ☕ Coffee ")
+        
+        # Main container
+        container = ttk.Frame(frame, style='Dark.TFrame')
+        container.pack(fill=tk.BOTH, expand=True, padx=20, pady=20)
+        
+        # Coffee section
+        coffee_frame = ttk.LabelFrame(container, text="Support Development", style='Card.TLabelframe', padding="30")
+        coffee_frame.pack(fill=tk.BOTH, expand=True, pady=20)
+        
+        # Coffee icon and message
+        ttk.Label(coffee_frame, text="☕", font=('Segoe UI', 48), style='Info.TLabel').pack(pady=10)
+        
+        ttk.Label(coffee_frame, text="Enjoying the Regenerative Addresses Tool Pro?", 
+                 font=('Segoe UI', 16, 'bold'), style='Info.TLabel').pack(pady=10)
+        
+        ttk.Label(coffee_frame, text="If you find this tool helpful for your security work,\nconsider buying me a coffee to support continued development!", 
+                 font=('Segoe UI', 12), style='Info.TLabel', justify=tk.CENTER).pack(pady=20)
+        
+        # Coffee link button
+        def open_coffee_link():
+            import webbrowser
+            # Replace with your actual Buy Me a Coffee link
+            webbrowser.open("https://www.buymeacoffee.com/YOUR_USERNAME")
+        
+        coffee_btn = ttk.Button(coffee_frame, text="☕ Buy Me a Coffee", 
+                               command=open_coffee_link,
+                               style='Success.TButton')
+        coffee_btn.pack(pady=20, padx=20, ipady=10, ipadx=20)
+        
+        # Alternative support info
+        ttk.Separator(coffee_frame, orient=tk.HORIZONTAL).pack(fill=tk.X, pady=20)
+        
+        ttk.Label(coffee_frame, text="Your support helps me:\n• Add new security features\n• Improve existing tools\n• Provide regular updates\n• Keep the tool free and open source", 
+                 font=('Segoe UI', 11), style='Info.TLabel', justify=tk.LEFT).pack(pady=10)
+        
+        # Optional support message
+        ttk.Label(coffee_frame, text="No pressure - the tool will always be free!\nBut coffee always helps with late-night coding sessions! 😊", 
+                 font=('Segoe UI', 10, 'italic'), style='Info.TLabel', justify=tk.CENTER).pack(pady=15)
+        
+        # Stats section
+        stats_frame = ttk.LabelFrame(container, text="Tool Statistics", style='Card.TLabelframe', padding="20")
+        stats_frame.pack(fill=tk.X, pady=10)
+        
+        ttk.Label(stats_frame, text="• 7,419+ Proxy Addresses", style='Info.TLabel').pack(anchor=tk.W, pady=2)
+        ttk.Label(stats_frame, text="• Real Security Scanner", style='Info.TLabel').pack(anchor=tk.W, pady=2)
+        ttk.Label(stats_frame, text="• System Hardening Tools", style='Info.TLabel').pack(anchor=tk.W, pady=2)
+        ttk.Label(stats_frame, text="• Networking Education Module", style='Info.TLabel').pack(anchor=tk.W, pady=2)
+        ttk.Label(stats_frame, text="• Professional Web Interface", style='Info.TLabel').pack(anchor=tk.W, pady=2)
+        ttk.Label(stats_frame, text="• Cross-Platform Support", style='Info.TLabel').pack(anchor=tk.W, pady=2)
     
     # Method implementations
     def login(self):
