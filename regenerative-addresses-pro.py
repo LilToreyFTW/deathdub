@@ -771,18 +771,18 @@ class RegenerativeAddressesToolPro:
         
         # Login card
         card = ttk.LabelFrame(container, text="Authentication", padding="30")
-        card.configure(font=('Segoe UI', 12, 'bold'))
+        card.configure(padding="30")
         
         # Username
         ttk.Label(card, text="Username:", style='Info.TLabel').grid(row=0, column=0, 
                                                                    sticky=tk.W, pady=10)
-        self.username_entry = ttk.Entry(card, width=30, font=('Segoe UI', 10))
+        self.username_entry = ttk.Entry(card, width=30)
         self.username_entry.grid(row=0, column=1, pady=10, padx=(10, 0))
         
         # Password
         ttk.Label(card, text="Password:", style='Info.TLabel').grid(row=1, column=0, 
                                                                    sticky=tk.W, pady=10)
-        self.password_entry = ttk.Entry(card, width=30, show="●", font=('Segoe UI', 10))
+        self.password_entry = ttk.Entry(card, width=30, show="●")
         self.password_entry.grid(row=1, column=1, pady=10, padx=(10, 0))
         
         # Remember me
@@ -814,27 +814,27 @@ class RegenerativeAddressesToolPro:
         container.place(relx=0.5, rely=0.5, anchor='center')
         
         card = ttk.LabelFrame(container, text="Create Account", padding="30")
-        card.configure(font=('Segoe UI', 12, 'bold'))
+        card.configure(padding="30")
         
         # Fields
         ttk.Label(card, text="Username:", style='Info.TLabel').grid(row=0, column=0, 
                                                                    sticky=tk.W, pady=10)
-        self.reg_username = ttk.Entry(card, width=30, font=('Segoe UI', 10))
+        self.reg_username = ttk.Entry(card, width=30)
         self.reg_username.grid(row=0, column=1, pady=10, padx=(10, 0))
         
         ttk.Label(card, text="Email:", style='Info.TLabel').grid(row=1, column=0, 
                                                                sticky=tk.W, pady=10)
-        self.reg_email = ttk.Entry(card, width=30, font=('Segoe UI', 10))
+        self.reg_email = ttk.Entry(card, width=30)
         self.reg_email.grid(row=1, column=1, pady=10, padx=(10, 0))
         
         ttk.Label(card, text="Password:", style='Info.TLabel').grid(row=2, column=0, 
                                                                    sticky=tk.W, pady=10)
-        self.reg_password = ttk.Entry(card, width=30, show="●", font=('Segoe UI', 10))
+        self.reg_password = ttk.Entry(card, width=30, show="●")
         self.reg_password.grid(row=2, column=1, pady=10, padx=(10, 0))
         
         ttk.Label(card, text="Confirm:", style='Info.TLabel').grid(row=3, column=0, 
                                                                   sticky=tk.W, pady=10)
-        self.reg_confirm = ttk.Entry(card, width=30, show="●", font=('Segoe UI', 10))
+        self.reg_confirm = ttk.Entry(card, width=30, show="●")
         self.reg_confirm.grid(row=3, column=1, pady=10, padx=(10, 0))
         
         # Buttons

@@ -21,7 +21,7 @@ def create_windows_package():
     
     # Copy all necessary files for v2.0
     files_to_copy = [
-        "regenerative-addresses-new.py",
+        "regenerative-addresses-pro.py",
         "regenerative-addresses.py",  # Keep original as backup
         "kali_credential_obtainer.py", 
         "auto_updater.py",

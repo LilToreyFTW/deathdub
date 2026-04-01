@@ -1,0 +1,59 @@
+2026-04-01 03:27:35,544 - INFO - Database initialized successfully
+2026-04-01 03:28:10,866 - INFO - Loaded 7419 proxies from all_proxies.txt
+2026-04-01 03:29:28,357 - INFO - Database initialized successfully
+2026-04-01 03:29:50,575 - INFO - Database initialized successfully
+2026-04-01 03:30:15,777 - INFO - Loaded 7419 proxies from all_proxies.txt
+2026-04-01 03:30:26,248 - INFO - Loaded 3274 proxies from proxies.txt
+2026-04-01 03:30:26,248 - INFO - Loaded 0 proxies from http_proxies.txt
+2026-04-01 03:30:26,248 - INFO - Loaded 0 proxies from socks4_proxies.txt
+2026-04-01 03:30:26,248 - INFO - Loaded 0 proxies from socks5_proxies.txt
+2026-04-01 03:30:36,658 - INFO - Loaded 3144 proxies from http_proxies2.txt
+2026-04-01 03:30:45,840 - INFO - Loaded 2836 proxies from socks4_proxies2.txt
+2026-04-01 03:30:53,282 - INFO - Loaded 2162 proxies from socks5_proxies2.txt
+2026-04-01 03:30:53,283 - INFO - Total unique proxies loaded: 7419
+2026-04-01 03:35:06,371 - INFO - Database initialized successfully
+2026-04-01 03:35:31,837 - INFO - Loaded 7419 proxies from all_proxies.txt
+2026-04-01 03:35:42,527 - INFO - Loaded 3274 proxies from proxies.txt
+2026-04-01 03:35:42,527 - INFO - Loaded 0 proxies from http_proxies.txt
+2026-04-01 03:35:42,527 - INFO - Loaded 0 proxies from socks4_proxies.txt
+2026-04-01 03:35:42,527 - INFO - Loaded 0 proxies from socks5_proxies.txt
+2026-04-01 03:35:53,274 - INFO - Loaded 3144 proxies from http_proxies2.txt
+2026-04-01 03:36:01,882 - INFO - Database initialized successfully
+2026-04-01 03:36:12,675 - INFO - Database initialized successfully
+2026-04-01 03:36:19,422 - ERROR - Error saving proxy: database is locked
+2026-04-01 03:36:25,170 - ERROR - Error saving proxy: database is locked
+2026-04-01 03:36:30,188 - ERROR - Error saving proxy: database is locked
+2026-04-01 03:36:31,922 - INFO - Loaded 7419 proxies from all_proxies.txt
+2026-04-01 03:36:42,835 - INFO - Loaded 3274 proxies from proxies.txt
+2026-04-01 03:36:42,836 - INFO - Loaded 0 proxies from http_proxies.txt
+2026-04-01 03:36:42,836 - INFO - Loaded 0 proxies from socks4_proxies.txt
+2026-04-01 03:36:42,836 - INFO - Loaded 0 proxies from socks5_proxies.txt
+2026-04-01 03:36:53,186 - INFO - Loaded 3144 proxies from http_proxies2.txt
+2026-04-01 03:37:02,471 - INFO - Loaded 2836 proxies from socks4_proxies2.txt
+2026-04-01 03:37:09,616 - INFO - Loaded 2162 proxies from socks5_proxies2.txt
+2026-04-01 03:37:09,617 - INFO - Total unique proxies loaded: 7419
+2026-04-01 03:37:23,174 - INFO - Database initialized successfully
+2026-04-01 03:37:47,586 - INFO - Loaded 7419 proxies from all_proxies.txt
+2026-04-01 03:37:58,584 - INFO - Loaded 3274 proxies from proxies.txt
+2026-04-01 03:37:58,584 - INFO - Loaded 0 proxies from http_proxies.txt
+2026-04-01 03:37:58,584 - INFO - Loaded 0 proxies from socks4_proxies.txt
+2026-04-01 03:37:58,584 - INFO - Loaded 0 proxies from socks5_proxies.txt
+2026-04-01 03:38:08,895 - INFO - Loaded 3144 proxies from http_proxies2.txt
+2026-04-01 03:38:18,417 - INFO - Loaded 2836 proxies from socks4_proxies2.txt
+2026-04-01 03:38:25,570 - INFO - Loaded 2162 proxies from socks5_proxies2.txt
+2026-04-01 03:38:25,573 - INFO - Total unique proxies loaded: 7419
+2026-04-01 03:38:33,505 - WARNING - Failed login attempt: kali
+2026-04-01 03:38:53,289 - INFO - User added: kali
+2026-04-01 03:38:54,653 - INFO - New user registered: kali
+2026-04-01 03:39:03,971 - INFO - User logged in: kali
+2026-04-01 03:43:32,336 - INFO - Database initialized successfully
+2026-04-01 03:43:56,984 - INFO - Loaded 7419 proxies from all_proxies.txt
+2026-04-01 03:44:07,974 - INFO - Loaded 3274 proxies from proxies.txt
+2026-04-01 03:44:07,975 - INFO - Loaded 0 proxies from http_proxies.txt
+2026-04-01 03:44:07,975 - INFO - Loaded 0 proxies from socks4_proxies.txt
+2026-04-01 03:44:07,975 - INFO - Loaded 0 proxies from socks5_proxies.txt
+2026-04-01 03:44:18,138 - INFO - Loaded 3144 proxies from http_proxies2.txt
+2026-04-01 03:44:27,575 - INFO - Loaded 2836 proxies from socks4_proxies2.txt
+2026-04-01 03:44:34,766 - INFO - Loaded 2162 proxies from socks5_proxies2.txt
+2026-04-01 03:44:34,768 - INFO - Total unique proxies loaded: 7419
+2026-04-01 03:44:48,653 - INFO - User logged in: kali
