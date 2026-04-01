@@ -1,4 +1,25 @@
-# 🚀 Regenerative Addresses Tool Pro v3.1.0
+#!/usr/bin/env python3
+"""
+GitHub Release Creator for v3.1.0
+Creates a comprehensive GitHub release with all assets and information
+"""
+
+import os
+import subprocess
+import json
+from datetime import datetime
+
+def run_command(command, cwd=None):
+    """Run a shell command and return the output"""
+    try:
+        result = subprocess.run(command, shell=True, capture_output=True, text=True, cwd=cwd)
+        return result.stdout.strip(), result.stderr.strip(), result.returncode
+    except Exception as e:
+        return "", str(e), 1
+
+def create_release_notes():
+    """Create comprehensive release notes for v3.1.0"""
+    release_notes = """# 🚀 Regenerative Addresses Tool Pro v3.1.0
 
 ## 🎯 Major Release Highlights
 
@@ -180,3 +201,167 @@
 **📄 License**: MIT License - See LICENSE file for details
 
 **🎉 Thank you for using Regenerative Addresses Tool Pro!**
+"""
+    
+    with open("RELEASE_NOTES_v3.1.md", "w") as f:
+        f.write(release_notes)
+    
+    print("✅ Release notes created: RELEASE_NOTES_v3.1.md")
+    return "RELEASE_NOTES_v3.1.md"
+
+def create_changelog():
+    """Create changelog for v3.1.0"""
+    changelog = """# 🔄 Changelog
+
+## [3.1.0] - 2026-04-01
+
+### 🚀 Added
+- AI-powered threat detection system
+- Predictive security analytics
+- Smart resource management
+- Adaptive defense systems
+- DemonVPN integration with real WireGuard
+- C-based networking implementation
+- Advanced key management
+- Multi-protocol VPN support
+- Professional UI with custom images
+- Docker container integration
+- Container monitoring system
+- VPN-enabled containers
+- Automated workflows
+- Enhanced visual interface
+- Modern dark theme
+- Responsive design improvements
+
+### 🔐 Security
+- Enhanced encryption algorithms
+- Improved key management
+- Advanced threat detection
+- Behavioral security analysis
+- Predictive security measures
+- SSL certificate improvements
+- Network security enhancements
+
+### 🐛 Fixed
+- Fixed requests module import in Windows builds
+- Enhanced error handling for network operations
+- Improved memory usage and performance
+- Fixed UI rendering on high-DPI displays
+- Enhanced SSL certificate handling
+- Fixed Docker integration issues
+- Improved VPN connection stability
+
+### 🔧 Changed
+- Updated Python requirement to 3.10+
+- Enhanced security protocols
+- Updated dependency versions
+- Improved configuration format
+- Optimized build process
+- Enhanced error messages
+
+### 🗑️ Removed
+- Deprecated legacy VPN implementations
+- Old UI components
+- Unused dependencies
+- Legacy configuration options
+
+### ⚠️ Breaking Changes
+- Python 3.10+ now required
+- Updated security protocols
+- New configuration format
+- Enhanced dependency requirements
+
+---
+
+## [3.0.0] - Previous Release
+- Initial v3.0 release with basic features
+- Core security scanning tools
+- Basic VPN functionality
+- Initial Docker integration
+"""
+    
+    with open("CHANGELOG.md", "w") as f:
+        f.write(changelog)
+    
+    print("✅ Changelog created: CHANGELOG.md")
+    return "CHANGELOG.md"
+
+def create_github_release():
+    """Create GitHub release using gh CLI"""
+    print("🚀 Creating GitHub Release for v3.1.0...")
+    
+    # Create release notes
+    release_notes_file = create_release_notes()
+    
+    # Create changelog
+    changelog_file = create_changelog()
+    
+    # Get current commit hash
+    stdout, stderr, returncode = run_command("git rev-parse HEAD")
+    if returncode != 0:
+        print(f"❌ Error getting commit hash: {stderr}")
+        return False
+    
+    commit_hash = stdout
+    
+    # Create release using gh CLI
+    release_command = f"""gh release create v3.1.0 \
+        --title "Regenerative Addresses Tool Pro v3.1.0" \
+        --notes-file "{release_notes_file}" \
+        --target "{commit_hash}" \
+        --latest"""
+    
+    print(f"📝 Running: {release_command}")
+    stdout, stderr, returncode = run_command(release_command)
+    
+    if returncode != 0:
+        print(f"❌ Error creating release: {stderr}")
+        return False
+    
+    print("✅ GitHub release created successfully!")
+    print(f"📋 Release notes: {release_notes_file}")
+    print(f"📋 Changelog: {changelog_file}")
+    print("🔗 Release: https://github.com/LilToreyFTW/deathdub/releases/tag/v3.1.0")
+    
+    return True
+
+def main():
+    """Main function"""
+    print("🚀 GitHub Release Creator for v3.1.0")
+    print("=" * 50)
+    
+    # Check if gh CLI is installed
+    stdout, stderr, returncode = run_command("gh --version")
+    if returncode != 0:
+        print("❌ GitHub CLI (gh) not found")
+        print("Please install GitHub CLI: https://cli.github.com/")
+        return False
+    
+    print(f"✅ GitHub CLI version: {stdout}")
+    
+    # Check if authenticated
+    stdout, stderr, returncode = run_command("gh auth status")
+    if returncode != 0:
+        print("❌ Not authenticated with GitHub")
+        print("Please run: gh auth login")
+        return False
+    
+    print("✅ Authenticated with GitHub")
+    
+    # Create release
+    success = create_github_release()
+    
+    if success:
+        print("\n🎉 Release creation completed successfully!")
+        print("📦 Don't forget to upload build artifacts:")
+        print("   - RegenerativeAddressesToolPro-v3.1-windows.zip")
+        print("   - regenerative-addresses-tool-pro-v3.1-linux.tar.gz")
+        print("   - Docker image: deathdub/regenerative-addresses-tool:v3.1.0")
+    else:
+        print("\n❌ Release creation failed!")
+        return False
+    
+    return True
+
+if __name__ == "__main__":
+    main()
