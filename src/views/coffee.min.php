@@ -11,7 +11,7 @@
                 
                 <p class="mb-4">If you find this tool helpful for your security work,<br>consider buying me a coffee to support continued development!</p>
                 
-                <a href="https://www.buymeacoffee.com/YOUR_USERNAME" target="_blank" class="btn btn-success btn-lg mb-4">
+                <a href="https://www.buymeacoffee.com/toreyftw" target="_blank" class="btn btn-success btn-lg mb-4">
                     ☕ Buy Me a Coffee
                 </a>
                 

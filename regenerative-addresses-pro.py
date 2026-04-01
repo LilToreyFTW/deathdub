@@ -1671,7 +1671,7 @@ Features:
         def open_coffee_link():
             import webbrowser
             # Replace with your actual Buy Me a Coffee link
-            webbrowser.open("https://www.buymeacoffee.com/YOUR_USERNAME")
+            webbrowser.open("https://www.buymeacoffee.com/toreyftw")
         
         coffee_btn = ttk.Button(coffee_frame, text="☕ Buy Me a Coffee", 
                                command=open_coffee_link,
