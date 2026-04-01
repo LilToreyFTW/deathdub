@@ -58,3 +58,46 @@
 2026-04-01 03:44:34,768 - INFO - Total unique proxies loaded: 7419
 2026-04-01 03:44:48,653 - INFO - User logged in: kali
 2026-04-01 05:11:42,206 - INFO - Database initialized successfully
+2026-04-01 15:56:59,131 - INFO - Database initialized successfully
+2026-04-01 15:57:25,272 - INFO - Loaded 7419 proxies from all_proxies.txt
+2026-04-01 15:57:35,756 - INFO - Loaded 3274 proxies from proxies.txt
+2026-04-01 15:57:35,756 - INFO - Loaded 0 proxies from http_proxies.txt
+2026-04-01 15:57:35,756 - INFO - Loaded 0 proxies from socks4_proxies.txt
+2026-04-01 15:57:35,756 - INFO - Loaded 0 proxies from socks5_proxies.txt
+2026-04-01 15:57:46,211 - INFO - Loaded 3144 proxies from http_proxies2.txt
+2026-04-01 15:57:55,026 - INFO - Loaded 2836 proxies from socks4_proxies2.txt
+2026-04-01 15:58:51,553 - INFO - Loaded 2162 proxies from socks5_proxies2.txt
+2026-04-01 15:58:51,554 - INFO - Total unique proxies loaded: 7419
+2026-04-01 15:59:25,883 - INFO - Database initialized successfully
+2026-04-01 16:01:03,012 - INFO - Loaded 7419 proxies from all_proxies.txt
+2026-04-01 16:01:13,507 - INFO - Loaded 3274 proxies from proxies.txt
+2026-04-01 16:01:13,508 - INFO - Loaded 0 proxies from http_proxies.txt
+2026-04-01 16:01:13,508 - INFO - Loaded 0 proxies from socks4_proxies.txt
+2026-04-01 16:01:13,508 - INFO - Loaded 0 proxies from socks5_proxies.txt
+2026-04-01 16:29:00,725 - INFO - Database initialized successfully
+2026-04-01 16:29:26,834 - INFO - Loaded 7419 proxies from all_proxies.txt
+2026-04-01 16:29:37,327 - INFO - Loaded 3274 proxies from proxies.txt
+2026-04-01 16:29:37,328 - INFO - Loaded 0 proxies from http_proxies.txt
+2026-04-01 16:29:37,328 - INFO - Loaded 0 proxies from socks4_proxies.txt
+2026-04-01 16:29:37,328 - INFO - Loaded 0 proxies from socks5_proxies.txt
+2026-04-01 16:29:47,541 - INFO - Loaded 3144 proxies from http_proxies2.txt
+2026-04-01 16:29:56,749 - INFO - Loaded 2836 proxies from socks4_proxies2.txt
+2026-04-01 16:31:23,538 - INFO - Database initialized successfully
+2026-04-01 16:31:46,889 - INFO - Loaded 7419 proxies from all_proxies.txt
+2026-04-01 16:31:57,302 - INFO - Loaded 3274 proxies from proxies.txt
+2026-04-01 16:31:57,302 - INFO - Loaded 0 proxies from http_proxies.txt
+2026-04-01 16:31:57,302 - INFO - Loaded 0 proxies from socks4_proxies.txt
+2026-04-01 16:31:57,302 - INFO - Loaded 0 proxies from socks5_proxies.txt
+2026-04-01 16:32:07,892 - INFO - Loaded 3144 proxies from http_proxies2.txt
+2026-04-01 16:32:18,243 - INFO - Loaded 2836 proxies from socks4_proxies2.txt
+2026-04-01 16:32:25,723 - INFO - Loaded 2162 proxies from socks5_proxies2.txt
+2026-04-01 16:32:25,724 - INFO - Total unique proxies loaded: 7419
+2026-04-01 16:32:51,268 - WARNING - User already exists: torey
+2026-04-01 16:33:03,297 - WARNING - Failed login attempt: torey
+2026-04-01 16:33:08,380 - WARNING - Failed login attempt: torey
+2026-04-01 16:33:13,488 - WARNING - Failed login attempt: torey
+2026-04-01 16:33:21,963 - WARNING - Failed login attempt: torey
+2026-04-01 16:33:26,526 - WARNING - Failed login attempt: kali
+2026-04-01 16:33:43,812 - INFO - User added: tdawg123
+2026-04-01 16:33:45,432 - INFO - New user registered: tdawg123
+2026-04-01 16:35:54,685 - INFO - Database initialized successfully
