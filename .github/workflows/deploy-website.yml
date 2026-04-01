@@ -1,0 +1,87 @@
+name: Deploy Website
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout Regenerative Addresses Tool
+      uses: actions/checkout@v4
+      with:
+        path: regenerative-addresses-pro
+        
+    - name: Checkout v0 Website
+      uses: actions/checkout@v4
+      with:
+        repository: LilToreyFTW/v0-regenerative-addresses-tool
+        path: v0-website
+        token: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: v0-website/package.json
+        
+    - name: Install dependencies
+      run: |
+        cd v0-website
+        npm ci
+        
+    - name: Update website content
+      run: |
+        cd v0-website
+        
+        # Get latest commit info
+        cd ../regenerative-addresses-pro
+        LATEST_COMMIT=$(git rev-parse HEAD)
+        COMMIT_MESSAGE=$(git log -1 --pretty=format:"%s")
+        COMMIT_AUTHOR=$(git log -1 --pretty=format:"%an")
+        COMMIT_DATE=$(git log -1 --pretty=format:"%ad" --date=short)
+        VERSION=$(git describe --tags --abbrev=0 2>/dev/null || echo "v3.0.0")
+        COMMIT_COUNT=$(git rev-list --count HEAD)
+        SHORT_HASH=$(git rev-parse --short HEAD)
+        FULL_VERSION="${VERSION}.${COMMIT_COUNT}+${SHORT_HASH}"
+        
+        echo "Latest commit: $LATEST_COMMIT"
+        echo "Full version: $FULL_VERSION"
+        
+        cd ../v0-website
+        
+        # Update version in header.tsx
+        sed -i "s/v[0-9]\+\.[0-9]\+\.[0-9]\+/v3.0.${COMMIT_COUNT}/g" components/header.tsx
+        
+        # Update version in package.json
+        sed -i "s/\"version\": \".*\"/\"version\": \"${FULL_VERSION}\"/g" package.json
+        
+        echo "Website content updated successfully"
+        
+    - name: Build website
+      run: |
+        cd v0-website
+        npm run build
+        
+    - name: Deploy to Vercel
+      uses: amondnet/vercel-action@v25
+      with:
+        vercel-token: ${{ secrets.VERCEL_TOKEN }}
+        vercel-org-id: ${{ secrets.ORG_ID }}
+        vercel-project-id: ${{ secrets.PROJECT_ID }}
+        working-directory: ./v0-website
+        vercel-args: '--prod'
+        
+    - name: Update deployment info
+      run: |
+        echo "🚀 Website deployed successfully!"
+        echo "📱 Your websites will be updated shortly:"
+        echo "  - https://regenerative-addresses-tool.vercel.app"
+        echo "  - https://regenerative-addresses-t-git-2c19b3-coresremotehelpers-projects.vercel.app"
+        echo "  - https://regenerative-addresses-tool-lwpve9uqi.vercel.app"
