@@ -13,6 +13,17 @@ import re
 from datetime import datetime, timedelta
 import hashlib
 import uuid
+import ssl
+import requests
+import io
+
+# Try to import PIL for image support
+try:
+    from PIL import Image, ImageTk
+    PIL_AVAILABLE = True
+except ImportError:
+    PIL_AVAILABLE = False
+
 import os
 import urllib.request
 import json
@@ -1718,8 +1729,52 @@ Features:
         vpn_frame = ttk.LabelFrame(container, text="Demon VPN Interface", style='Card.TLabelframe', padding="30")
         vpn_frame.pack(fill=tk.BOTH, expand=True, pady=20)
         
-        # VPN icon and message
-        ttk.Label(vpn_frame, text="🔐", font=('Segoe UI', 48), style='Info.TLabel').pack(pady=10)
+        # VPN icon and custom images
+        # Main VPN logo
+        vpn_logo_frame = ttk.Frame(vpn_frame, style='Dark.TFrame')
+        vpn_logo_frame.pack(fill=tk.X, pady=(0, 20))
+        
+        # Custom images
+        try:
+            # Create a frame for images
+            images_frame = ttk.Frame(vpn_logo_frame, style='Dark.TFrame')
+            images_frame.pack()
+            
+            # Load custom images using PIL
+            from PIL import Image, ImageTk
+            import urllib.request
+            import io
+            
+            # Load main VPN image
+            try:
+                vpn_response = urllib.request.urlopen("https://assets.grok.com/users/a3c2219c-c385-4737-a2a0-ef5332f398d3/generated/5db3c20f-3b0a-4d58-ade0-951177dc6aec/image.jpg")
+                vpn_image_data = vpn_response.read()
+                vpn_image = Image.open(io.BytesIO(vpn_image_data))
+                vpn_image = vpn_image.resize((100, 100), Image.Resampling.LANCZOS)
+                vpn_photo = ImageTk.PhotoImage(vpn_image)
+                
+                vpn_img_label = ttk.Label(images_frame, image=vpn_photo, style='Dark.TFrame')
+                vpn_img_label.pack(side=tk.LEFT, padx=(0, 20))
+            except Exception as e:
+                # Fallback to text if image loading fails
+                ttk.Label(images_frame, text="🔐", font=('Segoe UI', 48), style='Info.TLabel').pack(side=tk.LEFT, padx=(0, 20))
+            
+            # Load connection success image
+            try:
+                success_response = urllib.request.urlopen("https://assets.grok.com/users/a3c2219c-c385-4737-a2a0-ef5332f398d3/generated/48a016ad-bd3c-48df-9445-467f938b304b/image.jpg")
+                success_image_data = success_response.read()
+                success_image = Image.open(io.BytesIO(success_image_data))
+                success_image = success_image.resize((80, 80), Image.Resampling.LANCZOS)
+                success_photo = ImageTk.PhotoImage(success_image)
+                
+                success_img_label = ttk.Label(images_frame, image=success_photo, style='Dark.TFrame')
+                success_img_label.pack(side=tk.LEFT, padx=20)
+            except Exception as e:
+                ttk.Label(images_frame, text="✅", font=('Segoe UI', 32), style='Success.TLabel').pack(side=tk.LEFT, padx=20)
+                
+        except ImportError:
+            # Fallback if PIL is not available
+            ttk.Label(vpn_frame, text="🔐", font=('Segoe UI', 48), style='Info.TLabel').pack(pady=10)
         
         ttk.Label(vpn_frame, text="Demon VPN - WireGuard Docker Integration", 
                  font=('Segoe UI', 16, 'bold'), style='Info.TLabel').pack(pady=10)
@@ -1817,6 +1872,78 @@ Features:
                   command=self.check_ip_address,
                   style='Primary.TButton').pack(side=tk.LEFT, padx=5, ipady=5, ipadx=10)
         
+        # Side bar with custom images
+        side_bar_frame = ttk.LabelFrame(vpn_frame, text="VPN Status", style='Card.TLabelframe', padding="15")
+        side_bar_frame.pack(fill=tk.X, pady=15)
+        
+        # Create side bar with images
+        try:
+            from PIL import Image, ImageTk
+            import urllib.request
+            import io
+            
+            # Side bar images container
+            side_images_frame = ttk.Frame(side_bar_frame, style='Dark.TFrame')
+            side_images_frame.pack(fill=tk.X, pady=10)
+            
+            # Load side bar 1 image
+            try:
+                side1_response = urllib.request.urlopen("https://assets.grok.com/users/a3c2219c-c385-4737-a2a0-ef5332f398d3/generated/dd8dc4ed-3651-45c4-bcf9-d729ff06651b/image.jpg")
+                side1_image_data = side1_response.read()
+                side1_image = Image.open(io.BytesIO(side1_image_data))
+                side1_image = side1_image.resize((60, 60), Image.Resampling.LANCZOS)
+                side1_photo = ImageTk.PhotoImage(side1_image)
+                
+                side1_frame = ttk.Frame(side_images_frame, style='Dark.TFrame')
+                side1_frame.pack(side=tk.LEFT, padx=10)
+                
+                side1_img_label = ttk.Label(side1_frame, image=side1_photo, style='Dark.TFrame')
+                side1_img_label.pack()
+                
+                ttk.Label(side1_frame, text="Side Bar 1", 
+                         font=('Segoe UI', 10), style='Info.TLabel').pack()
+            except Exception as e:
+                side1_frame = ttk.Frame(side_images_frame, style='Dark.TFrame')
+                side1_frame.pack(side=tk.LEFT, padx=10)
+                ttk.Label(side1_frame, text="📊", 
+                         font=('Segoe UI', 24), style='Info.TLabel').pack()
+                ttk.Label(side1_frame, text="Side Bar 1", 
+                         font=('Segoe UI', 10), style='Info.TLabel').pack()
+            
+            # Load side bar 2 image
+            try:
+                side2_response = urllib.request.urlopen("https://assets.grok.com/users/a3c2219c-c385-4737-a2a0-ef5332f398d3/generated/31973508-ae5a-40fa-9d1f-2c34af39f0cc/image.jpg")
+                side2_image_data = side2_response.read()
+                side2_image = Image.open(io.BytesIO(side2_image_data))
+                side2_image = side2_image.resize((60, 60), Image.Resampling.LANCZOS)
+                side2_photo = ImageTk.PhotoImage(side2_image)
+                
+                side2_frame = ttk.Frame(side_images_frame, style='Dark.TFrame')
+                side2_frame.pack(side=tk.LEFT, padx=10)
+                
+                side2_img_label = ttk.Label(side2_frame, image=side2_photo, style='Dark.TFrame')
+                side2_img_label.pack()
+                
+                ttk.Label(side2_frame, text="Side Bar 2", 
+                         font=('Segoe UI', 10), style='Info.TLabel').pack()
+            except Exception as e:
+                side2_frame = ttk.Frame(side_images_frame, style='Dark.TFrame')
+                side2_frame.pack(side=tk.LEFT, padx=10)
+                ttk.Label(side2_frame, text="🔧", 
+                         font=('Segoe UI', 24), style='Info.TLabel').pack()
+                ttk.Label(side2_frame, text="Side Bar 2", 
+                         font=('Segoe UI', 10), style='Info.TLabel').pack()
+                
+        except ImportError:
+            # Fallback if PIL is not available
+            side_fallback_frame = ttk.Frame(side_bar_frame, style='Dark.TFrame')
+            side_fallback_frame.pack(fill=tk.X, pady=10)
+            
+            ttk.Label(side_fallback_frame, text="📊 Side Bar 1", 
+                     font=('Segoe UI', 16), style='Info.TLabel').pack(side=tk.LEFT, padx=20)
+            ttk.Label(side_fallback_frame, text="🔧 Side Bar 2", 
+                     font=('Segoe UI', 16), style='Info.TLabel').pack(side=tk.LEFT, padx=20)
+        
         # Features info
         features_frame = ttk.LabelFrame(vpn_frame, text="WireGuard Features", style='Card.TLabelframe', padding="15")
         features_frame.pack(fill=tk.X, pady=15)
@@ -1845,6 +1972,120 @@ Features:
         vpn_scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
         self.vpn_log.config(yscrollcommand=vpn_scrollbar.set)
         vpn_scrollbar.config(command=self.vpn_log.yview)
+        
+        # Login screen and environment variables
+        login_frame = ttk.LabelFrame(vpn_frame, text="Login Configuration", style='Card.TLabelframe', padding="15")
+        login_frame.pack(fill=tk.X, pady=15)
+        
+        # Custom login screen image
+        try:
+            from PIL import Image, ImageTk
+            import urllib.request
+            import io
+            
+            login_response = urllib.request.urlopen("https://assets.grok.com/users/a3c2219c-c385-4737-a2a0-ef5332f398d3/generated/eed731f4-db27-40e6-86c9-34c92f6a25e9/image.jpg")
+            login_image_data = login_response.read()
+            login_image = Image.open(io.BytesIO(login_image_data))
+            login_image = login_image.resize((80, 80), Image.Resampling.LANCZOS)
+            login_photo = ImageTk.PhotoImage(login_image)
+            
+            login_img_frame = ttk.Frame(login_frame, style='Dark.TFrame')
+            login_img_frame.pack(side=tk.LEFT, padx=(0, 20))
+            
+            login_img_label = ttk.Label(login_img_frame, image=login_photo, style='Dark.TFrame')
+            login_img_label.pack()
+            
+            login_info_frame = ttk.Frame(login_frame, style='Dark.TFrame')
+            login_info_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+            
+            ttk.Label(login_info_frame, text="Login Screen", 
+                     font=('Segoe UI', 12, 'bold'), style='Info.TLabel').pack(anchor=tk.W)
+            ttk.Label(login_info_frame, text="Secure authentication\nwith Demon API", 
+                     font=('Segoe UI', 10), style='Info.TLabel').pack(anchor=tk.W, pady=5)
+            
+        except ImportError:
+            login_img_frame = ttk.Frame(login_frame, style='Dark.TFrame')
+            login_img_frame.pack(side=tk.LEFT, padx=(0, 20))
+            ttk.Label(login_img_frame, text="🔑", 
+                     font=('Segoe UI', 32), style='Info.TLabel').pack()
+            
+            login_info_frame = ttk.Frame(login_frame, style='Dark.TFrame')
+            login_info_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+            
+            ttk.Label(login_info_frame, text="Login Screen", 
+                     font=('Segoe UI', 12, 'bold'), style='Info.TLabel').pack(anchor=tk.W)
+            ttk.Label(login_info_frame, text="Secure authentication\nwith Demon API", 
+                     font=('Segoe UI', 10), style='Info.TLabel').pack(anchor=tk.W, pady=5)
+        
+        # Environment variables table
+        env_frame = ttk.LabelFrame(login_frame, text="Environment Variables", style='Card.TLabelframe', padding="10")
+        env_frame.pack(fill=tk.X, pady=10)
+        
+        # Custom env table image
+        try:
+            env_response = urllib.request.urlopen("https://assets.grok.com/users/a3c2219c-c385-4737-a2a0-ef5332f398d3/generated/dbf97438-608c-4a03-aae0-77a51b251bf0/image.jpg")
+            env_image_data = env_response.read()
+            env_image = Image.open(io.BytesIO(env_image_data))
+            env_image = env_image.resize((60, 60), Image.Resampling.LANCZOS)
+            env_photo = ImageTk.PhotoImage(env_image)
+            
+            env_table_frame = ttk.Frame(env_frame, style='Dark.TFrame')
+            env_table_frame.pack(fill=tk.X, pady=10)
+            
+            env_img_frame = ttk.Frame(env_table_frame, style='Dark.TFrame')
+            env_img_frame.pack(side=tk.LEFT, padx=(0, 20))
+            
+            env_img_label = ttk.Label(env_img_frame, image=env_photo, style='Dark.TFrame')
+            env_img_label.pack()
+            
+            env_info_frame = ttk.Frame(env_table_frame, style='Dark.TFrame')
+            env_info_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+            
+            # Environment variables table
+            env_vars = [
+                ("ACC", "Demon username", "example@gmail.com"),
+                ("PASS", "Demon password", "••••••"),
+                ("COUNTRY", "VPN country", "US"),
+                ("NETWORK", "Local network", "192.168.1.0/24"),
+                ("WHITELISTPORTS", "Open ports", "9090,8080"),
+                ("NAMESERVER", "DNS server", "1.1.1.1"),
+                ("PROTOCOL", "VPN protocol", "wireguard"),
+                ("PROXY", "HTTP proxy", "False"),
+                ("FIREWALL", "Firewall", "True")
+            ]
+            
+            ttk.Label(env_info_frame, text="Variable", 
+                     font=('Segoe UI', 10, 'bold'), style='Info.TLabel').pack(anchor=tk.W)
+            ttk.Label(env_info_frame, text="Description", 
+                     font=('Segoe UI', 10, 'bold'), style='Info.TLabel').pack(anchor=tk.W, padx=(20, 0))
+            ttk.Label(env_info_frame, text="Value", 
+                     font=('Segoe UI', 10, 'bold'), style='Info.TLabel').pack(anchor=tk.W, padx=(20, 0))
+            
+            for var, desc, val in env_vars:
+                var_frame = ttk.Frame(env_info_frame, style='Dark.TFrame')
+                var_frame.pack(fill=tk.X, pady=2)
+                
+                ttk.Label(var_frame, text=var, 
+                         font=('Consolas', 9), style='Info.TLabel').pack(side=tk.LEFT)
+                ttk.Label(var_frame, text=desc, 
+                         font=('Segoe UI', 9), style='Info.TLabel').pack(side=tk.LEFT, padx=(20, 0))
+                ttk.Label(var_frame, text=val, 
+                         font=('Consolas', 9), style='Info.TLabel').pack(side=tk.LEFT, padx=(20, 0))
+            
+        except ImportError:
+            env_table_frame = ttk.Frame(env_frame, style='Dark.TFrame')
+            env_table_frame.pack(fill=tk.X, pady=10)
+            
+            ttk.Label(env_table_frame, text="⚙️", 
+                     font=('Segoe UI', 24), style='Info.TLabel').pack(side=tk.LEFT, padx=(0, 20))
+            
+            env_info_frame = ttk.Frame(env_table_frame, style='Dark.TFrame')
+            env_info_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+            
+            ttk.Label(env_info_frame, text="Environment Variables", 
+                     font=('Segoe UI', 12, 'bold'), style='Info.TLabel').pack(anchor=tk.W)
+            ttk.Label(env_info_frame, text="All configuration\nvariables available", 
+                     font=('Segoe UI', 10), style='Info.TLabel').pack(anchor=tk.W, pady=5)
         
         # Initial log message
         self.add_vpn_log("Demon VPN interface initialized with WireGuard support.", "info")
