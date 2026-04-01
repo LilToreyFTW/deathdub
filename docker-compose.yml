@@ -1,0 +1,64 @@
+# DemonVPN Docker Compose
+# Production-ready Docker Compose configuration
+
+version: '3.8'
+
+services:
+  demonvpn:
+    build:
+      context: .
+      dockerfile: Dockerfile.demonvpn
+    image: demonvpn:latest
+    container_name: Demonvpn
+    hostname: Demonvpn
+    restart: unless-stopped
+    
+    # Privileged mode for network operations
+    privileged: true
+    cap_add:
+      - NET_ADMIN
+    
+    # Environment variables
+    environment:
+      - TZ=${TZ:-America/New_York}
+      - ACC=${ACC}
+      - PASS=${PASS}
+      - COUNTRY=${COUNTRY:-US}
+      - NETWORK=${NETWORK}
+      - WHITELISTPORTS=${WHITELISTPORTS}
+      - NAMESERVER=${NAMESERVER}
+      - PROTOCOL=${PROTOCOL:-wireguard}
+      - PROXY=${PROXY:-False}
+      - FIREWALL=${FIREWALL:-True}
+      - ARGS=${ARGS}
+    
+    # Port mappings
+    ports:
+      - "${WHITELISTPORTS:-9090}:${WHITELISTPORTS:-9090}"
+      - "3128:3128"  # HTTP proxy
+    
+    # Volume for Demon configuration
+    volumes:
+      - ./demon-config:/home/root/.Demon
+    
+    # Network configuration
+    networks:
+      - demon-network
+
+  # Example service that uses VPN
+  app-behind-vpn:
+    image: nginx:alpine
+    container_name: webapp
+    restart: unless-stopped
+    
+    # Use the VPN container's network namespace
+    network_mode: service:demonvpn
+    
+    # Environment
+    environment:
+      - VIRTUAL_HOST=example.com
+      - LETSENCRYPT_HOST=example.com
+
+networks:
+  demon-network:
+    driver: bridge

@@ -1,0 +1,99 @@
+# DemonVPN Dockerfile
+# Production-ready WireGuard container with Demon CLI integration
+
+FROM ubuntu:20.04
+
+# Set environment variables
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ="America/New_York"
+
+# Labels
+LABEL maintainer="Tyler McPhee"
+LABEL version="3.0.0"
+LABEL description="DemonVPN WireGuard Docker Container"
+LABEL repository="https://github.com/LilToreyFTW/deathdub"
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    wireguard \
+    curl \
+    jq \
+    nmap \
+    netcat-openbsd \
+    openssl \
+    iptables \
+    iproute2 \
+    bc \
+    dnsutils \
+    iputils-ping \
+    squid \
+    tinyproxy \
+    systemd \
+    wget \
+    gnupg \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create Demon directory
+RUN mkdir -p /home/root/.Demon
+
+# Install Demon CLI
+RUN wget -O /tmp/demon-cli.deb https://download.demonvpn.com/cli/demon-cli_latest.deb \
+    && dpkg -i /tmp/demon-cli.deb \
+    || apt-get install -y -f /tmp/demon-cli.deb \
+    && rm /tmp/demon-cli.deb
+
+# Copy scripts
+COPY demon-vpn.sh /usr/local/bin/demon-vpn
+COPY demon-cli.sh /usr/local/bin/demon-cli
+
+# Make scripts executable
+RUN chmod +x /usr/local/bin/demon-vpn
+RUN chmod +x /usr/local/bin/demon-cli
+
+# Create entrypoint script
+RUN echo '#!/bin/bash' > /usr/local/bin/entrypoint.sh && \
+    echo 'set -e' >> /usr/local/bin/entrypoint.sh && \
+    echo '' >> /usr/local/bin/entrypoint.sh && \
+    echo 'echo "========================================"' >> /usr/local/bin/entrypoint.sh && \
+    echo 'echo "DemonVPN Docker Container v3.0.0"' >> /usr/local/bin/entrypoint.sh && \
+    echo 'echo "Created by: Tyler McPhee"' >> /usr/local/bin/entrypoint.sh && \
+    echo 'echo "GitHub: https://github.com/LilToreyFTW/deathdub"' >> /usr/local/bin/entrypoint.sh && \
+    echo 'echo "========================================"' >> /usr/local/bin/entrypoint.sh && \
+    echo '' >> /usr/local/bin/entrypoint.sh && \
+    echo 'echo "Configuration:"' >> /usr/local/bin/entrypoint.sh && \
+    echo 'echo "  Country: ${COUNTRY:-US}"' >> /usr/local/bin/entrypoint.sh && \
+    echo 'echo "  Protocol: ${PROTOCOL:-wireguard}"' >> /usr/local/bin/entrypoint.sh && \
+    echo 'echo "  Network: ${NETWORK:-none}"' >> /usr/local/bin/entrypoint.sh && \
+    echo 'echo "  Whitelist Ports: ${WHITELISTPORTS:-none}"' >> /usr/local/bin/entrypoint.sh && \
+    echo 'echo "  DNS Server: ${NAMESERVER:-auto}"' >> /usr/local/bin/entrypoint.sh && \
+    echo 'echo "  Proxy: ${PROXY:-False}"' >> /usr/local/bin/entrypoint.sh && \
+    echo 'echo "  Firewall: ${FIREWALL:-True}"' >> /usr/local/bin/entrypoint.sh && \
+    echo 'echo "========================================"' >> /usr/local/bin/entrypoint.sh && \
+    echo '' >> /usr/local/bin/entrypoint.sh && \
+    echo 'if [[ "${1:-}" == "cli" ]]; then' >> /usr/local/bin/entrypoint.sh && \
+    echo '    echo "Starting Demon CLI mode..."' >> /usr/local/bin/entrypoint.sh && \
+    echo '    exec /usr/local/bin/demon-cli "$@"' >> /usr/local/bin/entrypoint.sh && \
+    echo 'elif [[ "${1:-}" == "shell" ]]; then' >> /usr/local/bin/entrypoint.sh && \
+    echo '    echo "Starting shell mode..."' >> /usr/local/bin/entrypoint.sh && \
+    echo '    exec /bin/bash' >> /usr/local/bin/entrypoint.sh && \
+    echo 'else' >> /usr/local/bin/entrypoint.sh && \
+    echo '    echo "Starting DemonVPN mode..."' >> /usr/local/bin/entrypoint.sh && \
+    echo '    exec /usr/local/bin/demon-vpn "$@"' >> /usr/local/bin/entrypoint.sh && \
+    echo 'fi' >> /usr/local/bin/entrypoint.sh
+
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+# Expose ports
+EXPOSE 3128 8080 9090
+
+# Volume for Demon configuration
+VOLUME ["/home/root/.Demon"]
+
+# Set entrypoint
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+CMD []
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:8080/health || exit 1
